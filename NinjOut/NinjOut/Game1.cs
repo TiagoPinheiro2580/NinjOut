@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace NinjOut
 {
@@ -11,11 +14,17 @@ namespace NinjOut
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Camera camera;
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            this.graphics.PreferredBackBufferWidth = 1920;
+            this.graphics.PreferredBackBufferHeight = 1080;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -39,7 +48,7 @@ namespace NinjOut
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            camera = new Camera(GraphicsDevice.Viewport);
             // TODO: use this.Content to load your game content here
         }
 
