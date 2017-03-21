@@ -14,7 +14,8 @@ namespace NinjOut
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Camera camera;
+        //Camera camera;
+        Map map;
 
 
         public Game1()
@@ -22,9 +23,9 @@ namespace NinjOut
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            this.graphics.PreferredBackBufferWidth = 1920;
-            this.graphics.PreferredBackBufferHeight = 1080;
-            this.graphics.IsFullScreen = false;
+            //this.graphics.PreferredBackBufferWidth = 1920;
+            //this.graphics.PreferredBackBufferHeight = 1080;
+            //this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace NinjOut
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            map = new Map();
 
             base.Initialize();
         }
@@ -48,7 +50,14 @@ namespace NinjOut
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            camera = new Camera(GraphicsDevice.Viewport);
+            //camera = new Camera(GraphicsDevice.Viewport);
+            Tile.Content = Content;
+            map.Generate(new int[,] { 
+                { 0, 0, 0, 1 }, 
+                { 0, 0, 1, 2 }, 
+                { 0, 1, 2, 2 },
+                { 1, 2, 2, 2 },
+                }, 64);
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,6 +93,9 @@ namespace NinjOut
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            spriteBatch.Begin();
+            map.Draw(spriteBatch);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
