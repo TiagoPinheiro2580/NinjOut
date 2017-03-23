@@ -16,6 +16,7 @@ namespace NinjOut
         SpriteBatch spriteBatch;
         //Camera camera;
         Map map;
+        Player player;
 
 
         public Game1()
@@ -38,6 +39,7 @@ namespace NinjOut
         {
             // TODO: Add your initialization logic here
             map = new Map();
+            player = new Player();
 
             base.Initialize();
         }
@@ -52,12 +54,18 @@ namespace NinjOut
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //camera = new Camera(GraphicsDevice.Viewport);
             Tile.Content = Content;
-            map.Generate(new int[,] { 
-                { 0, 0, 0, 1 }, 
-                { 0, 0, 1, 2 }, 
-                { 0, 1, 2, 2 },
-                { 1, 2, 2, 2 },
-                }, 64);
+            map.Generate(new int[,] {
+                {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 0, 0, 0, 0 },
+                {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8, 0, 0, 0, 0 },
+                {3, 9, 9, 10, 0, 0, 0, 1, 5, 5, 5, 7, 0, 0, 1,5, 4, 6, 5, 7, 0, 0 }, 
+                {8, 0, 0, 0, 0, 0, 1, 4, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 6, 7, 0 }, 
+                {8, 0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 6, 7 },
+                {8, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3 },
+                }, 32);
+
+            player.Load(Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -82,6 +90,13 @@ namespace NinjOut
 
             // TODO: Add your update logic here
 
+            player.Update(gameTime);
+
+            foreach(CollisionTiles tile in map.CollisionTiles)
+            {
+                player.Collision(tile.Rectangle, map.Width, map.Height);
+            }
+
             base.Update(gameTime);
         }
 
@@ -91,10 +106,11 @@ namespace NinjOut
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+           GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
             map.Draw(spriteBatch);
+            player.Draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

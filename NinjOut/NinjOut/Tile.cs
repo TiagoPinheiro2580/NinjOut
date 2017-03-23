@@ -16,7 +16,7 @@ namespace NinjOut
         private Rectangle rectangle;
         public Rectangle Rectangle
         {
-            get { return Rectangle; }
+            get { return rectangle; }
             protected set { rectangle = value; }
         }
 
@@ -29,7 +29,7 @@ namespace NinjOut
 
         public void Draw (SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, Color.Blue);
+            spriteBatch.Draw(texture, rectangle, Color.White);
         }
     }
 
