@@ -17,6 +17,7 @@ namespace NinjOut
         Camera camera;
         Map map;
         Player player;
+        Texture2D playerTexture;
 
 
         public Game1()
@@ -24,8 +25,8 @@ namespace NinjOut
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            this.graphics.PreferredBackBufferWidth = 1260;
-            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.PreferredBackBufferWidth = 1900;
+            this.graphics.PreferredBackBufferHeight = 1080;
             this.graphics.IsFullScreen = false;
         }
 
@@ -39,8 +40,8 @@ namespace NinjOut
         {
             // TODO: Add your initialization logic here
             map = new Map();
-            player = new Player();
-            //camera = new Camera();
+            //player = new Player();
+           // camera = new Camera();
 
             base.Initialize();
         }
@@ -53,8 +54,10 @@ namespace NinjOut
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             camera = new Camera(GraphicsDevice.Viewport);
+            playerTexture = Content.Load <Texture2D>("ArmySprite");
+            player = new Player(playerTexture, 2, 5);
 
             Tile.Content = Content;
             map.Generate(new int[,] {
@@ -112,9 +115,11 @@ namespace NinjOut
         {
            GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            base.Draw(gameTime);
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
             map.Draw(spriteBatch);
-            player.Draw(spriteBatch);
+            player.Draw(spriteBatch, new Vector2(400,200));
             spriteBatch.End();
             // TODO: Add your drawing code here
 
