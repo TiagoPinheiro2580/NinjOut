@@ -21,6 +21,7 @@ namespace NinjOut
         private Vector2 velocity;
         private Rectangle rectangle;
         Point frameSize;
+        int frames = 0;
 
         private bool hasJumped = false;
 
@@ -38,6 +39,7 @@ namespace NinjOut
             Columns = columns;
             currentFrame = 0;
             totalFrames = Rows * Columns;
+            
 
 
         }
@@ -56,14 +58,23 @@ namespace NinjOut
 
             Input(gameTime);
 
-            currentFrame++;
+            frames++;
+            
+            if (frames > 5)
+            {
+                currentFrame++;
+                frames = 0;
+            }
+
+            //currentFrame++;
             if (currentFrame == totalFrames)
             {
+
                 currentFrame = 0;
             }
 
             //"gravidade"
-            if(velocity.Y <10)
+            if (velocity.Y <10)
             {
                 velocity.Y += 0.4f;
             }
