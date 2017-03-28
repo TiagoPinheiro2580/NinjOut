@@ -29,11 +29,12 @@ namespace NinjOut
         public Player()
         {
             //frameSize = new Point(95, 195);
-            frameSize = new Point(15, 45);
+            frameSize = new Point(50, 90);
 
         }
         public void Load(ContentManager Content)
         {
+            position = new Vector2(0, 15);
             texture = Content.Load<Texture2D>("Player");
         }
 
@@ -73,8 +74,8 @@ namespace NinjOut
 
             if(Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped==false)
             {
-                position.Y -= 5f;
-                velocity.Y = -9f;
+                position.Y -= 15f;
+                velocity.Y = -11f;
                 hasJumped = true;
             }
 
@@ -84,28 +85,36 @@ namespace NinjOut
         {
             if(rectangle.TouchTopOf(newRectangle))
             {
+                // rectangle.Y = newRectangle.Y - rectangle.Height;
                 rectangle.Y = newRectangle.Y - rectangle.Height;
+                velocity.Y = 0f;
+                hasJumped = false;
             }
             if(rectangle.TouchLeftOf(newRectangle))
             {
                 //2 é arrendondado , depende do tamanho da sprite. Ajusta-se o valor conforme a necessidade
-                position.X = newRectangle.X - rectangle.Width -2;
+                //position.X = newRectangle.X - rectangle.Width -2;
+               rectangle.X = newRectangle.X - rectangle.Width-2;
             }
             if(rectangle.TouchRightOf(newRectangle))
             {
-                position.X = newRectangle.X + newRectangle.Width + 2;
+                //position.X = newRectangle.X + newRectangle.Width + 2;
+                rectangle.X = newRectangle.X + rectangle.Width +2;
             }
             if(rectangle.TouchBottomOf(newRectangle))
             {
                 velocity.Y = 1f;
             }
 
+            //position.X = rectangle.X;
+            //position.Y = rectangle.Y;
+
             //impedir que o jogador vá para fora do mapa - limites
             if(position.X <0)
             {
                 position.X = 0;
             }
-            if(position.X> xOffset-rectangle.Width)
+            if(position.X> xOffset- rectangle.Width)
             {
                 position.X = xOffset - rectangle.Width;
             }

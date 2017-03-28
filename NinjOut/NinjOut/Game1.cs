@@ -14,7 +14,7 @@ namespace NinjOut
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //Camera camera;
+        Camera camera;
         Map map;
         Player player;
 
@@ -24,9 +24,9 @@ namespace NinjOut
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            //this.graphics.PreferredBackBufferWidth = 1920;
-            //this.graphics.PreferredBackBufferHeight = 1080;
-            //this.graphics.IsFullScreen = false;
+            this.graphics.PreferredBackBufferWidth = 1260;
+            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -40,6 +40,7 @@ namespace NinjOut
             // TODO: Add your initialization logic here
             map = new Map();
             player = new Player();
+            //camera = new Camera();
 
             base.Initialize();
         }
@@ -52,18 +53,20 @@ namespace NinjOut
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //camera = new Camera(GraphicsDevice.Viewport);
+
+            camera = new Camera(GraphicsDevice.Viewport);
+
             Tile.Content = Content;
             map.Generate(new int[,] {
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 0, 0, 0, 0 },
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8, 0, 0, 0, 0 },
-                {3, 9, 9, 10, 0, 0, 0, 1, 5, 5, 5, 7, 0, 0, 1,5, 4, 6, 5, 7, 0, 0 }, 
+                {8, 0, 0, 0, 0, 0, 0, 1, 5, 5, 5, 7, 0, 0, 1, 5, 4, 6, 5, 7, 0, 0 }, 
                 {8, 0, 0, 0, 0, 0, 1, 4, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 6, 7, 0 }, 
                 {8, 0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 6, 7 },
                 {8, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3 },
-                }, 32);
+                }, 128);
 
             player.Load(Content);
             // TODO: use this.Content to load your game content here
@@ -95,6 +98,7 @@ namespace NinjOut
             foreach(CollisionTiles tile in map.CollisionTiles)
             {
                 player.Collision(tile.Rectangle, map.Width, map.Height);
+                camera.Update(player.Position, map.Width, map.Height);
             }
 
             base.Update(gameTime);
@@ -108,7 +112,7 @@ namespace NinjOut
         {
            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
             map.Draw(spriteBatch);
             player.Draw(spriteBatch);
             spriteBatch.End();
