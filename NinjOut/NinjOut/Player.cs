@@ -152,7 +152,7 @@ namespace NinjOut
                 position.Y = yOffset - rectangle.Height;
             }
         }
-
+ 
         public void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
             int width = Texture.Width / Columns;

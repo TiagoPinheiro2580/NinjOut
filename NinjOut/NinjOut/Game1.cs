@@ -58,7 +58,8 @@ namespace NinjOut
             camera = new Camera(GraphicsDevice.Viewport);
 
             Tile.Content = Content;
-            map.Generate(new int[,] {
+            map.Generate(new int[,] 
+            {
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 0, 0, 0, 0 },
