@@ -19,6 +19,7 @@ namespace NinjOut
         Player player;
 
 
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -26,7 +27,7 @@ namespace NinjOut
 
             this.graphics.PreferredBackBufferWidth = 1260;
             this.graphics.PreferredBackBufferHeight = 720;
-            this.graphics.IsFullScreen = false;
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
