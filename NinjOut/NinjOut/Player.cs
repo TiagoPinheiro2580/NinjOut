@@ -12,12 +12,16 @@ namespace NinjOut
 {
     class Player
     {
-        private Texture2D texture;
+        private Texture2D Texture { get; set; }
+        private int Rows { get; set; }
+        public int Columns { get; set; }
+        public int currentFrame, totalFrames;
+  
         private Vector2 position = new Vector2(64, 384);
         private Vector2 velocity;
         private Rectangle rectangle;
         Point frameSize;
-
+        int frames = 0;
 
         private bool hasJumped = false;
 
@@ -26,16 +30,23 @@ namespace NinjOut
             get { return position; }
         }
 
-        public Player()
+        public Player(Texture2D texture, int rows, int columns)
         {
             //frameSize = new Point(95, 195);
             frameSize = new Point(50, 90);
+            Texture = texture;
+            Rows = rows;
+            Columns = columns;
+            currentFrame = 0;
+            totalFrames = Rows * Columns;
+            
+
 
         }
         public void Load(ContentManager Content)
         {
             position = new Vector2(0, 15);
-            texture = Content.Load<Texture2D>("Player");
+            Texture = Content.Load<Texture2D>("ArmySprite");
         }
 
         public void Update(GameTime gameTime)
@@ -43,13 +54,27 @@ namespace NinjOut
             position += velocity;
             //rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
-            rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
+            //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
 
             Input(gameTime);
 
+            frames++;
+            
+            if (frames > 5)
+            {
+                currentFrame++;
+                frames = 0;
+            }
+
+            //currentFrame++;
+            if (currentFrame == totalFrames)
+            {
+
+                currentFrame = 0;
+            }
 
             //"gravidade"
-            if(velocity.Y <10)
+            if (velocity.Y <10)
             {
                 velocity.Y += 0.4f;
             }
@@ -128,9 +153,20 @@ namespace NinjOut
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
-            spriteBatch.Draw(texture, rectangle, Color.White);
+            int width = Texture.Width / Columns;
+            int height = Texture.Height / Rows;
+            int row = (int)((float)currentFrame / (float)Columns);
+            int colum = currentFrame % Columns;
+
+            Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
+            Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+
+            //spriteBatch.Begin();
+            spriteBatch.Draw(Texture, destiantionRectangle, sourceRectangle, Color.White);
+            //spriteBatch.End();
+
         }
 
     }
