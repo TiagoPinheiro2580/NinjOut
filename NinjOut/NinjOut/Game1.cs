@@ -17,6 +17,7 @@ namespace NinjOut
         Camera camera;
         Map map;
         Player player;
+        private Texture2D AnimatedPlayerWalking;
 
 
 
@@ -27,7 +28,7 @@ namespace NinjOut
 
             this.graphics.PreferredBackBufferWidth = 1260;
             this.graphics.PreferredBackBufferHeight = 720;
-            this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace NinjOut
         {
             // TODO: Add your initialization logic here
             map = new Map();
-            player = new Player();
+            //player = new Player();
             //camera = new Camera();
 
             base.Initialize();
@@ -56,6 +57,9 @@ namespace NinjOut
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             camera = new Camera(GraphicsDevice.Viewport);
+            //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
+            player = new Player(AnimatedPlayerWalking, 2, 5);
+
 
             Tile.Content = Content;
             map.Generate(new int[,] 
@@ -69,8 +73,8 @@ namespace NinjOut
                 {8, 0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 6, 7 },
                 {8, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3 },
                 }, 128);
-
             player.Load(Content);
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -116,7 +120,7 @@ namespace NinjOut
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
             map.Draw(spriteBatch);
-            player.Draw(spriteBatch);
+            player.Draw(spriteBatch, new Vector2(400, 200));
             spriteBatch.End();
             // TODO: Add your drawing code here
 

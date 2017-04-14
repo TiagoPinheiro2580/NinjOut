@@ -39,7 +39,6 @@ namespace NinjOut
             Columns = columns;
             currentFrame = 0;
             totalFrames = Rows * Columns;
-            
 
 
         }
@@ -47,12 +46,13 @@ namespace NinjOut
         {
             position = new Vector2(0, 15);
             Texture = Content.Load<Texture2D>("ArmySprite");
+
         }
 
         public void Update(GameTime gameTime)
         {
             position += velocity;
-            //rectangle = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
 
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
 
