@@ -12,11 +12,12 @@ namespace NinjOut
 {
     class Player
     {
-        private Texture2D Texture { get; set; }
+        public Texture2D Texture { get; set; }
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
-       
+
+        //public Texture2D texturaFixe;
         private Vector2 position = new Vector2(64, 384);
         private Vector2 velocity;
         private Rectangle rectangle, sourceRectangle;
@@ -44,16 +45,18 @@ namespace NinjOut
 
 
         }
+
         public void Load(ContentManager Content)
         {
             position = new Vector2(0, 15);
-            Texture = Content.Load<Texture2D>("ArmySprite");
+            Texture = Content.Load<Texture2D>("NinjaSpriteSheet");
 
         }
 
         public void Update(GameTime gameTime)
         {
 
+            //texturaFixe = Texture;
             width = Texture.Width / Columns;
             height = Texture.Height / Rows;
             row = (int)((float)currentFrame / (float)Columns);
@@ -177,9 +180,8 @@ namespace NinjOut
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
             //Rectangle rectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
-            //spriteBatch.Begin();
             spriteBatch.Draw(Texture, rectangle, sourceRectangle, Color.White);
-            //spriteBatch.End();
+
 
         }
 
