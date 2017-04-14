@@ -16,6 +16,7 @@ namespace NinjOut
         public List<CollisionTiles> CollisionTiles
         {
             get { return collisionTiles; }
+
         }
 
         private int width, height;

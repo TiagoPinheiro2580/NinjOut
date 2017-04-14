@@ -120,7 +120,8 @@ namespace NinjOut
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
             map.Draw(spriteBatch);
-            player.Draw(spriteBatch, new Vector2(400, 200));
+            //player.Draw(spriteBatch, new Vector2(400, 200));
+            player.Draw(spriteBatch, player.Position);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

@@ -16,12 +16,14 @@ namespace NinjOut
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
-  
+       
         private Vector2 position = new Vector2(64, 384);
         private Vector2 velocity;
-        private Rectangle rectangle;
+        private Rectangle rectangle, sourceRectangle;
         Point frameSize;
         int frames = 0;
+        int width, height, row, colum;
+
 
         private bool hasJumped = false;
 
@@ -51,10 +53,19 @@ namespace NinjOut
 
         public void Update(GameTime gameTime)
         {
+
+            width = Texture.Width / Columns;
+            height = Texture.Height / Rows;
+            row = (int)((float)currentFrame / (float)Columns);
+            colum = currentFrame % Columns;
+
             position += velocity;
-            rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
+            //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
 
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
+            sourceRectangle = new Rectangle(width * colum, height * row, width, height);
+            rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+
 
             Input(gameTime);
 
@@ -78,6 +89,7 @@ namespace NinjOut
             {
                 velocity.Y += 0.4f;
             }
+
 
         }
 
@@ -155,16 +167,18 @@ namespace NinjOut
  
         public void Draw(SpriteBatch spriteBatch, Vector2 location)
         {
-            int width = Texture.Width / Columns;
-            int height = Texture.Height / Rows;
-            int row = (int)((float)currentFrame / (float)Columns);
-            int colum = currentFrame % Columns;
 
-            Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
-            Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+            //int width = Texture.Width / Columns;
+            //int height = Texture.Height / Rows;
+            //int row = (int)((float)currentFrame / (float)Columns);
+            //int colum = currentFrame % Columns;
+
+            //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
+            //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+            //Rectangle rectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
             //spriteBatch.Begin();
-            spriteBatch.Draw(Texture, destiantionRectangle, sourceRectangle, Color.White);
+            spriteBatch.Draw(Texture, rectangle, sourceRectangle, Color.White);
             //spriteBatch.End();
 
         }
