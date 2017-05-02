@@ -58,7 +58,7 @@ namespace NinjOut
 
             camera = new Camera(GraphicsDevice.Viewport);
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
-            player = new Player(AnimatedPlayerWalking, 11a, 19);
+            player = new Player(AnimatedPlayerWalking, 11, 19);
 
 
             Tile.Content = Content;
