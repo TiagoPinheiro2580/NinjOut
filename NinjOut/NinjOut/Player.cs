@@ -49,7 +49,7 @@ namespace NinjOut
         public void Load(ContentManager Content)
         {
             position = new Vector2(0, 15);
-            Texture = Content.Load<Texture2D>("ArmySprite");
+            Texture = Content.Load<Texture2D>("NinjaSpriteSheet");
 
         }
 
