@@ -12,7 +12,10 @@ namespace NinjOut
 {
     class Player
     {
-        public Texture2D Texture { get; set; }
+        public Texture2D WalkTexture, currentTexture;
+        public Texture2D JumpTexture;
+        public Texture2D IdleTexture;
+
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
@@ -23,7 +26,7 @@ namespace NinjOut
         private Rectangle rectangle, sourceRectangle;
         Point frameSize;
         int frames = 0;
-        int width, height, row, colum;
+        int row, colum;
 
 
         private bool hasJumped = false;
@@ -33,13 +36,10 @@ namespace NinjOut
             get { return position; }
         }
 
-        public Player(Texture2D texture, int rows, int columns)
+        public Player()
         {
             //frameSize = new Point(95, 195);
             frameSize = new Point(50, 90);
-            Texture = texture;
-            Rows = rows;
-            Columns = columns;
             currentFrame = 0;
             totalFrames = Rows * Columns;
 
@@ -49,35 +49,46 @@ namespace NinjOut
         public void Load(ContentManager Content)
         {
             position = new Vector2(0, 15);
-            Texture = Content.Load<Texture2D>("ArmySprite");
-
+            WalkTexture = Content.Load<Texture2D>("WalkSpriteSheet");
+            JumpTexture = Content.Load<Texture2D>("JumpSpriteSheet");
+            IdleTexture = Content.Load<Texture2D>("IdleSpriteSheet");
+            currentTexture = IdleTexture;
         }
 
         public void Update(GameTime gameTime)
         {
 
             //texturaFixe = Texture;
-            width = Texture.Width / Columns;
-            height = Texture.Height / Rows;
-            row = (int)((float)currentFrame / (float)Columns);
-            colum = currentFrame % Columns;
+            //width = Texture.Width / Columns;
+            //height = Texture.Height / Rows;
+            float columnsWidth = currentTexture.Width;
+            row = (currentTexture.Height / 2) * 0;
+
+            //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
+            //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+
 
             position += velocity;
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
 
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
-            sourceRectangle = new Rectangle(width * colum, height * row, width, height);
-            rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+            sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+            rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 10, currentTexture.Height);
 
 
             Input(gameTime);
 
             frames++;
-            
+
             if (frames > 5)
             {
                 currentFrame++;
+                if (currentFrame > 9)
+                    currentFrame = 0;
+
                 frames = 0;
+                colum = (int)((columnsWidth / 10) * currentFrame);
+
             }
 
             //currentFrame++;
@@ -88,7 +99,7 @@ namespace NinjOut
             }
 
             //"gravidade"
-            if (velocity.Y <10)
+            if (velocity.Y < 10)
             {
                 velocity.Y += 0.4f;
             }
@@ -102,7 +113,7 @@ namespace NinjOut
             {
                 velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
             }
-            else if(Keyboard.GetState().IsKeyDown(Keys.A))
+            else if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
             }
@@ -112,36 +123,37 @@ namespace NinjOut
             }
 
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped==false)
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
             {
                 position.Y -= 15f;
                 velocity.Y = -11f;
                 hasJumped = true;
+
             }
 
         }
 
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
         {
-            if(rectangle.TouchTopOf(newRectangle))
+            if (rectangle.TouchTopOf(newRectangle))
             {
                 // rectangle.Y = newRectangle.Y - rectangle.Height;
                 rectangle.Y = newRectangle.Y - rectangle.Height;
                 velocity.Y = 0f;
                 hasJumped = false;
             }
-            if(rectangle.TouchLeftOf(newRectangle))
+            if (rectangle.TouchLeftOf(newRectangle))
             {
                 //2 é arrendondado , depende do tamanho da sprite. Ajusta-se o valor conforme a necessidade
                 //position.X = newRectangle.X - rectangle.Width -2;
-               rectangle.X = newRectangle.X - rectangle.Width-2;
+                rectangle.X = newRectangle.X - rectangle.Width - 2;
             }
-            if(rectangle.TouchRightOf(newRectangle))
+            if (rectangle.TouchRightOf(newRectangle))
             {
                 //position.X = newRectangle.X + newRectangle.Width + 2;
-                rectangle.X = newRectangle.X + rectangle.Width +2;
+                rectangle.X = newRectangle.X + rectangle.Width + 2;
             }
-            if(rectangle.TouchBottomOf(newRectangle))
+            if (rectangle.TouchBottomOf(newRectangle))
             {
                 velocity.Y = 1f;
             }
@@ -150,25 +162,25 @@ namespace NinjOut
             //position.Y = rectangle.Y;
 
             //impedir que o jogador vá para fora do mapa - limites
-            if(position.X <0)
+            if (position.X < 0)
             {
                 position.X = 0;
             }
-            if(position.X> xOffset- rectangle.Width)
+            if (position.X > xOffset - rectangle.Width)
             {
                 position.X = xOffset - rectangle.Width;
             }
-            if(position.Y<0)
+            if (position.Y < 0)
             {
                 velocity.Y = 1f;
             }
-            if(position.Y >yOffset -rectangle.Height)
+            if (position.Y > yOffset - rectangle.Height)
             {
                 position.Y = yOffset - rectangle.Height;
             }
         }
- 
-        public void Draw(SpriteBatch spriteBatch, Vector2 location)
+
+        public void Draw(SpriteBatch spriteBatch)
         {
 
             //int width = Texture.Width / Columns;
@@ -180,10 +192,21 @@ namespace NinjOut
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
             //Rectangle rectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
-            spriteBatch.Draw(Texture, rectangle, sourceRectangle, Color.White);
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+                currentTexture = WalkTexture;
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
+            {
+                currentTexture = JumpTexture;
+            }
+
+            else
+            {
+                currentTexture = IdleTexture;
+            }
+            spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White);
 
 
         }
-
     }
 }

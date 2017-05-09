@@ -17,9 +17,6 @@ namespace NinjOut
         Camera camera;
         Map map;
         Player player;
-        private Texture2D AnimatedPlayerWalking;
-
-
 
         public Game1()
         {
@@ -58,7 +55,7 @@ namespace NinjOut
 
             camera = new Camera(GraphicsDevice.Viewport);
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
-            player = new Player(AnimatedPlayerWalking, 2, 5);
+            player = new Player();
 
 
             Tile.Content = Content;
@@ -95,8 +92,6 @@ namespace NinjOut
         protected override void Update(GameTime gameTime)
         {
 
-            AnimatedPlayerWalking = player.Texture;
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -124,7 +119,7 @@ namespace NinjOut
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
             map.Draw(spriteBatch);
             //player.Draw(spriteBatch, new Vector2(400, 200));
-            player.Draw(spriteBatch, player.Position);
+            player.Draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
 
