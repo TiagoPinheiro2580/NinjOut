@@ -12,9 +12,12 @@ namespace NinjOut
 {
     class Player
     {
-        public Texture2D WalkTexture, currentTexture;
+        public Texture2D WalkTexture, currentTexture, oldTexture;
         public Texture2D JumpTexture;
         public Texture2D IdleTexture;
+        public Texture2D DeadTexture;
+        public Texture2D GlideTexture;
+        public Texture2D AttackTexture;
 
         private int Rows { get; set; }
         public int Columns { get; set; }
@@ -27,7 +30,7 @@ namespace NinjOut
         Point frameSize;
         int frames = 0;
         int row, colum;
-
+        bool flip = false;
 
         private bool hasJumped = false;
 
@@ -52,7 +55,11 @@ namespace NinjOut
             WalkTexture = Content.Load<Texture2D>("WalkSpriteSheet");
             JumpTexture = Content.Load<Texture2D>("JumpSpriteSheet");
             IdleTexture = Content.Load<Texture2D>("IdleSpriteSheet");
+            GlideTexture = Content.Load<Texture2D>("GlideSpriteSheet");
+            AttackTexture = Content.Load<Texture2D>("AttackSpriteSheet");
+            DeadTexture = Content.Load<Texture2D>("DeadSpriteSheet");
             currentTexture = IdleTexture;
+            oldTexture = currentTexture;
         }
 
         public void Update(GameTime gameTime)
@@ -72,9 +79,31 @@ namespace NinjOut
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
 
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
-            sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
-            rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 10, currentTexture.Height);
 
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+                currentTexture = WalkTexture;
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space) /*&& hasJumped == false*/)
+            {
+                currentTexture = JumpTexture;
+            }
+
+            else
+            {
+                currentTexture = IdleTexture;
+            }
+
+            if (currentTexture != oldTexture)
+            {
+                oldTexture = currentTexture;
+                currentFrame = 0;
+                frames = 0;
+            }
+
+          
+
+          
 
             Input(gameTime);
 
@@ -91,12 +120,35 @@ namespace NinjOut
 
             }
 
-            //currentFrame++;
             if (currentFrame == totalFrames)
             {
 
                 currentFrame = 0;
             }
+
+            if (currentTexture == WalkTexture)
+            {
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
+            }
+            else
+            {
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+            }
+
+            if (currentTexture == IdleTexture)
+            {
+                rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 9, currentTexture.Height);
+
+            }
+            else
+            {
+                rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 9, currentTexture.Height);
+
+            }
+
+
+            //currentFrame++;
+
 
             //"gravidade"
             if (velocity.Y < 10)
@@ -112,10 +164,13 @@ namespace NinjOut
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                flip = false;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
+
                 velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                flip = true;
             }
             else
             {
@@ -146,14 +201,20 @@ namespace NinjOut
             {
                 //2 é arrendondado , depende do tamanho da sprite. Ajusta-se o valor conforme a necessidade
                 //position.X = newRectangle.X - rectangle.Width -2;
-                rectangle.X = newRectangle.X - rectangle.Width - 2;
+                rectangle.X -= rectangle.Right-newRectangle.Left;
+                if (velocity.X > 0)
+                    velocity.X = 0;
             }
-            if (rectangle.TouchRightOf(newRectangle))
+            Rectangle idleRectangle = rectangle;
+            idleRectangle.Width /= 2;
+            if (idleRectangle.TouchRightOf(newRectangle))
             {
                 //position.X = newRectangle.X + newRectangle.Width + 2;
-                rectangle.X = newRectangle.X + rectangle.Width + 2;
+                rectangle.X += newRectangle.Right-rectangle.Left;
+                if (velocity.X < 0)
+                    velocity.X = 0;
             }
-            if (rectangle.TouchBottomOf(newRectangle))
+            if (idleRectangle.TouchBottomOf(newRectangle))
             {
                 velocity.Y = 1f;
             }
@@ -192,19 +253,11 @@ namespace NinjOut
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
             //Rectangle rectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-                currentTexture = WalkTexture;
-
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
-            {
-                currentTexture = JumpTexture;
-            }
-
+           
+            if (flip)
+                spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f);
             else
-            {
-                currentTexture = IdleTexture;
-            }
-            spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White);
+                spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.None , 0f);
 
 
         }
