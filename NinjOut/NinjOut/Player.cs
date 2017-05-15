@@ -253,7 +253,7 @@ namespace NinjOut
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
             //Rectangle rectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
-           
+           //olé
             if (flip)
                 spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f);
             else
