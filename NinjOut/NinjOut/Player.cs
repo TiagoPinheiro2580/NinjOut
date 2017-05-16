@@ -81,7 +81,7 @@ namespace NinjOut
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
 
 
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || (Keyboard.GetState().IsKeyDown(Keys.A)))
                 currentTexture = WalkTexture;
 
             else if (Keyboard.GetState().IsKeyDown(Keys.Space) /*&& hasJumped == false*/)
