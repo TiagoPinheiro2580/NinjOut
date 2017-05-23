@@ -17,6 +17,8 @@ namespace NinjOut
         Camera camera;
         Map map;
         Player player;
+        Scrolling scrolling1;
+        Scrolling scrolling2;
 
         public Game1()
         {
@@ -25,7 +27,10 @@ namespace NinjOut
 
             this.graphics.PreferredBackBufferWidth = 1260;
             this.graphics.PreferredBackBufferHeight = 720;
-            this.graphics.IsFullScreen = true;
+
+            //this.graphics.PreferredBackBufferWidth = 800;
+            //this.graphics.PreferredBackBufferHeight = 500;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
@@ -57,6 +62,8 @@ namespace NinjOut
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
             player = new Player();
 
+            scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 1260, 720));
+            scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(1260, 0, 1260, 720));
 
             Tile.Content = Content;
             map.Generate(new int[,] 
@@ -129,6 +136,20 @@ namespace NinjOut
                 camera.Update(player.Position, map.Width, map.Height);
             }
 
+            //Scrolling Backgrounds
+            if(scrolling1.rectangle.X + scrolling1.texture.Width<=0)
+            {
+                scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.texture.Width;
+            }
+
+            if (scrolling2.rectangle.X + scrolling2.texture.Width <= 0)
+            {
+                scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.texture.Width;
+            }
+
+            scrolling1.Update();
+            scrolling2.Update();
+
             base.Update(gameTime);
         }
 
@@ -142,6 +163,9 @@ namespace NinjOut
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
             map.Draw(spriteBatch);
+
+            scrolling1.Draw(spriteBatch);
+            scrolling2.Draw(spriteBatch);
             //player.Draw(spriteBatch, new Vector2(400, 200));
             player.Draw(spriteBatch);
             spriteBatch.End();

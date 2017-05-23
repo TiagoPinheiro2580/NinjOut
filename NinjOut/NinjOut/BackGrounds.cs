@@ -10,13 +10,29 @@ namespace NinjOut
 {
     class BackGrounds
     {
-        Texture2D texture;
-        Rectangle rectangle;
+        public Texture2D texture;
+        public Rectangle rectangle;
 
         public void Draw (SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, rectangle, Color.White);
         }
 
+    }
+
+    class Scrolling : BackGrounds
+    {
+
+        public Scrolling(Texture2D newTexture, Rectangle newRectangle)
+        {
+            texture = newTexture;
+            rectangle = newRectangle;
+        }
+
+        public void Update()
+        {
+            rectangle.X -= 3; //sempre que esta função for chamada a imagem vai mover-se 3 pixeis para a esquerda
+
+        }
     }
 }
