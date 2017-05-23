@@ -25,7 +25,7 @@ namespace NinjOut
 
         //public Texture2D texturaFixe;
         private Vector2 position = new Vector2(64, 384);
-        private Vector2 velocity;
+        public Vector2 velocity;
         private Rectangle rectangle, sourceRectangle;
         Point frameSize;
         int frames = 0;

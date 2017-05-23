@@ -25,11 +25,11 @@ namespace NinjOut
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            this.graphics.PreferredBackBufferWidth = 1260;
-            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.PreferredBackBufferWidth = 800;
+            this.graphics.PreferredBackBufferHeight = 600;
 
-            //this.graphics.PreferredBackBufferWidth = 800;
-            //this.graphics.PreferredBackBufferHeight = 500;
+            //this.graphics.PreferredBackBufferWidth = 2200;
+            //this.graphics.PreferredBackBufferHeight = 1600;
             this.graphics.IsFullScreen = false;
         }
 
@@ -62,8 +62,8 @@ namespace NinjOut
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
             player = new Player();
 
-            scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 1260, 720));
-            scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(1260, 0, 1260, 720));
+            scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+            scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(2200, 0, 2200, 1600));
 
             Tile.Content = Content;
             map.Generate(new int[,] 
@@ -86,7 +86,8 @@ namespace NinjOut
                 //{0, 0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 6, 7, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 6, 5, 5, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3},
                 //{0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 3, 8, 0, 0, 1, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
                 //}, 128);
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+
+            //{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -136,16 +137,34 @@ namespace NinjOut
                 camera.Update(player.Position, map.Width, map.Height);
             }
 
-            //Scrolling Backgrounds
-            if(scrolling1.rectangle.X + scrolling1.texture.Width<=0)
+            if(player.Position.X >= scrolling1.rectangle.Width/2)
             {
-                scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.texture.Width;
+                scrolling2.rectangle.X = scrolling1.rectangle.X + 600;
             }
+            //if (player.Position.X <= scrolling1.rectangle.Width / 2)
+            //{
+            //    scrolling2.rectangle.X = scrolling1.rectangle.X - scrolling1.texture.Width;
+            //}
+            if (player.Position.X > scrolling2.rectangle.Width/2 )
+            {
+                scrolling1.rectangle.X = scrolling2.rectangle.X + 600;
+            }
+            //if (player.Position.X <= scrolling2.rectangle.Width / 2)
+            //{
+            //    scrolling1.rectangle.X = scrolling2.rectangle.X - scrolling2.texture.Width;
+            //}
 
-            if (scrolling2.rectangle.X + scrolling2.texture.Width <= 0)
-            {
-                scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.texture.Width;
-            }
+
+            ////Scrolling Backgrounds
+            //if (scrolling1.rectangle.X + scrolling1.texture.Width <= 0)
+            //{
+            //    scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.texture.Width;
+            //}
+
+            //if (scrolling2.rectangle.X + scrolling2.texture.Width <= 0)
+            //{
+            //    scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.texture.Width;
+            //}
 
             scrolling1.Update();
             scrolling2.Update();
@@ -162,10 +181,11 @@ namespace NinjOut
            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
-            map.Draw(spriteBatch);
 
             scrolling1.Draw(spriteBatch);
             scrolling2.Draw(spriteBatch);
+            map.Draw(spriteBatch);
+
             //player.Draw(spriteBatch, new Vector2(400, 200));
             player.Draw(spriteBatch);
             spriteBatch.End();
