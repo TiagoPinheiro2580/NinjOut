@@ -254,7 +254,6 @@ namespace NinjOut
             else
                 spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.None , 0f);
 
-
         }
     }
 }

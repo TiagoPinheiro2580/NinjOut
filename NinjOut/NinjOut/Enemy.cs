@@ -69,17 +69,7 @@ namespace NinjOut
 
             position += velocity;
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
-
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
-
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D) || (Keyboard.GetState().IsKeyDown(Keys.A)))
-                currentTexture = WalkTexture;
-
-            else
-            {
-                currentTexture = IdleTexture;
-            }
 
             if (currentTexture != oldTexture)
             {
@@ -103,7 +93,6 @@ namespace NinjOut
 
             if (currentFrame == totalFrames)
             {
-
                 currentFrame = 0;
             }
 
@@ -121,10 +110,10 @@ namespace NinjOut
                 rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 9, currentTexture.Height);
 
             }
+
             else
             {
                 rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 9, currentTexture.Height);
-
             }
 
             //currentFrame++;
