@@ -19,6 +19,7 @@ namespace NinjOut
         Player player;
         Scrolling scrolling1;
         Scrolling scrolling2;
+        Enemy [] enemyArray = new Enemy[5];
 
         public Game1()
         {
@@ -62,9 +63,14 @@ namespace NinjOut
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
             player = new Player();
 
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                enemyArray[i] = new Enemy();
+            }
+
             scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 1260, 720));
             scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(1260, 0, 1260, 720));
-
+        
             Tile.Content = Content;
             map.Generate(new int[,] 
             {
@@ -168,6 +174,10 @@ namespace NinjOut
             scrolling2.Draw(spriteBatch);
             //player.Draw(spriteBatch, new Vector2(400, 200));
             player.Draw(spriteBatch);
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                enemyArray[i].Draw(spriteBatch);
+            }
             spriteBatch.End();
             // TODO: Add your drawing code here
 
