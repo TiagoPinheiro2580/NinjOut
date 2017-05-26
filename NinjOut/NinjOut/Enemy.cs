@@ -96,14 +96,14 @@ namespace NinjOut
                 currentFrame = 0;
             }
 
-            if (currentTexture == WalkTexture)
-            {
-                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
-            }
-            else
-            {
+            //if (currentTexture == WalkTexture)
+            //{
+            //    sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
+            //}
+            //else
+            //{
                 sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
-            }
+            //}
 
             if (currentTexture == IdleTexture)
             {
@@ -113,7 +113,7 @@ namespace NinjOut
 
             else
             {
-                rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 9, currentTexture.Height);
+                rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 10, currentTexture.Height);
             }
 
             //currentFrame++;
@@ -123,6 +123,35 @@ namespace NinjOut
             {
                 velocity.Y += 0.4f;
             }
+        }
+
+        private void Input(GameTime gameTime)
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                flip = false;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+
+                velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                flip = true;
+            }
+            else
+            {
+                velocity.X = 0f;
+            }
+
+
+            //if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
+            //{
+            //    position.Y -= 15f;
+            //    velocity.Y = -11f;
+            //    hasJumped = true;
+
+            //}
+
         }
 
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)

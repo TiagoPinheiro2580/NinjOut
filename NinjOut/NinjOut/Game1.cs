@@ -66,6 +66,7 @@ namespace NinjOut
             for (int i = 0; i < enemyArray.Length; i++)
             {
                 enemyArray[i] = new Enemy();
+                enemyArray[i].Load(Content);
             }
 
             scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 1260, 720));
@@ -136,9 +137,18 @@ namespace NinjOut
 
             player.Update(gameTime);
 
-            foreach(CollisionTiles tile in map.CollisionTiles)
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                enemyArray[i].Update(gameTime);
+            }
+
+            foreach (CollisionTiles tile in map.CollisionTiles)
             {
                 player.Collision(tile.Rectangle, map.Width, map.Height);
+                for (int i = 0; i < enemyArray.Length; i++)
+                {
+                    enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                }
                 camera.Update(player.Position, map.Width, map.Height);
             }
 
