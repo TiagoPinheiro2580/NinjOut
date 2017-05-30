@@ -26,12 +26,12 @@ namespace NinjOut
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            this.graphics.PreferredBackBufferWidth = 800;
-            this.graphics.PreferredBackBufferHeight = 600;
+            this.graphics.PreferredBackBufferWidth = 1920;
+            this.graphics.PreferredBackBufferHeight = 1080;
 
             //this.graphics.PreferredBackBufferWidth = 2200;
             //this.graphics.PreferredBackBufferHeight = 1600;
-            this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>
