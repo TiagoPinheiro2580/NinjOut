@@ -19,6 +19,7 @@ namespace NinjOut
         Player player;
         Scrolling scrolling1;
         Scrolling scrolling2;
+        Enemy[] enemyArray = new Enemy[5];
 
         public Game1()
         {
@@ -30,7 +31,7 @@ namespace NinjOut
 
             //this.graphics.PreferredBackBufferWidth = 2200;
             //this.graphics.PreferredBackBufferHeight = 1600;
-            this.graphics.IsFullScreen = false;
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -61,6 +62,12 @@ namespace NinjOut
             camera = new Camera(GraphicsDevice.Viewport);
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
             player = new Player();
+
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                enemyArray[i] = new Enemy();
+                enemyArray[i].Load(Content);
+            }
 
             scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
             scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(2200, 0, 2200, 1600));
@@ -131,23 +138,32 @@ namespace NinjOut
             //gitcenas 
             player.Update(gameTime);
 
-            foreach(CollisionTiles tile in map.CollisionTiles)
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                enemyArray[i].Update(gameTime);
+            }
+
+            foreach (CollisionTiles tile in map.CollisionTiles)
             {
                 player.Collision(tile.Rectangle, map.Width, map.Height);
+                for (int i = 0; i < enemyArray.Length; i++)
+                {
+                    enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                }
                 camera.Update(player.Position, map.Width, map.Height);
             }
 
-            if(player.Position.X >= scrolling1.rectangle.Width/2)
+            if (player.Position.X >= (scrolling1.rectangle.X+scrolling1.rectangle.Width / 2) && scrolling2.rectangle.X<scrolling1.rectangle.X)
             {
-                scrolling2.rectangle.X = scrolling1.rectangle.X + 600;
+                scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.rectangle.Width;
             }
             //if (player.Position.X <= scrolling1.rectangle.Width / 2)
             //{
             //    scrolling2.rectangle.X = scrolling1.rectangle.X - scrolling1.texture.Width;
             //}
-            if (player.Position.X > scrolling2.rectangle.Width/2 )
+            if (player.Position.X >= (scrolling2.rectangle.X+scrolling2.rectangle.Width / 2) && scrolling1.rectangle.X < scrolling2.rectangle.X)
             {
-                scrolling1.rectangle.X = scrolling2.rectangle.X + 600;
+                scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.rectangle.Width;
             }
             //if (player.Position.X <= scrolling2.rectangle.Width / 2)
             //{
@@ -188,6 +204,12 @@ namespace NinjOut
 
             //player.Draw(spriteBatch, new Vector2(400, 200));
             player.Draw(spriteBatch);
+
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                enemyArray[i].Draw(spriteBatch);
+            }
+
             spriteBatch.End();
             // TODO: Add your drawing code here
 
