@@ -23,6 +23,8 @@ namespace NinjOut
         public int currentFrame, totalFrames;
 
         //public Texture2D texturaFixe;
+        // Novos erros no github
+
         private Vector2 position = new Vector2(64, 384);
         private Vector2 velocity;
         private Rectangle rectangle, sourceRectangle;
