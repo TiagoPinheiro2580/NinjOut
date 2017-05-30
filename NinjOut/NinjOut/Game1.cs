@@ -128,7 +128,7 @@ namespace NinjOut
                 Exit();
 
             // TODO: Add your update logic here
-
+            //gitcenas 
             player.Update(gameTime);
 
             foreach(CollisionTiles tile in map.CollisionTiles)
