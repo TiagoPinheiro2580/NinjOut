@@ -284,7 +284,7 @@ namespace NinjOut
             player = new Player();
             font = Content.Load<SpriteFont>("DefaultFont");
             MediaPlayer.Play(Content.Load<Song>("backgroundMusic"));
-
+            //
             for (int i = 0; i < enemyArray.Length; i++)
             {
                 enemyArray[i] = new Enemy(player);
