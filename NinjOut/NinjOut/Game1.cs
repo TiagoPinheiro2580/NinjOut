@@ -19,7 +19,18 @@ namespace NinjOut
         Player player;
         Scrolling scrolling1;
         Scrolling scrolling2;
+        Scrolling scrolling3;
+        Scrolling scrolling4;
+        Scrolling scrolling5;
+        Scrolling scrolling6;
+        Scrolling scrolling7;
+        Scrolling scrolling8;
+        Scrolling scrolling9;
+        Scrolling scrolling10;
+
         Enemy[] enemyArray = new Enemy[5];
+        bool didGameStart = false;
+        SpriteFont font;
 
         public Game1()
         {
@@ -58,10 +69,10 @@ namespace NinjOut
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             camera = new Camera(GraphicsDevice.Viewport);
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
             player = new Player();
+            font = Content.Load<SpriteFont>("DefaultFont");
 
             for (int i = 0; i < enemyArray.Length; i++)
             {
@@ -70,10 +81,29 @@ namespace NinjOut
             }
 
             scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
-            scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(2200, 0, 2200, 1600));
+            scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+            scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+            scrolling4 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+            scrolling5 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+            scrolling6 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+            scrolling7 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+            scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+            scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+            scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+
+
+            scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.rectangle.Width;
+            scrolling3.rectangle.X = scrolling2.rectangle.X + scrolling2.rectangle.Width;
+            scrolling4.rectangle.X = scrolling3.rectangle.X + scrolling3.rectangle.Width;
+            scrolling5.rectangle.X = scrolling4.rectangle.X + scrolling4.rectangle.Width;
+            scrolling6.rectangle.X = scrolling5.rectangle.X + scrolling5.rectangle.Width;
+            scrolling7.rectangle.X = scrolling6.rectangle.X + scrolling6.rectangle.Width;
+            scrolling8.rectangle.X = scrolling7.rectangle.X + scrolling7.rectangle.Width;
+            scrolling9.rectangle.X = scrolling8.rectangle.X + scrolling8.rectangle.Width;
+            scrolling10.rectangle.X = scrolling9.rectangle.X + scrolling9.rectangle.Width;
 
             Tile.Content = Content;
-            map.Generate(new int[,] 
+            map.Generate(new int[,]
             {
 
 
@@ -103,8 +133,8 @@ namespace NinjOut
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 7, 0, 0, 0, 0, 0, 0, 0},
-            { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 5, 7, 0, 0, 1, 5, 4, 6, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 3, 8, 0, 0, 1, 0, 0, 0, 0}, 
-            { 0, 0, 0, 0, 0, 0, 1, 4, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 6, 7, 0, 0, 0, 0, 0, 1, 5, 5, 5, 5, 5, 7, 0, 0, 1, 5, 5, 5, 5, 5, 5, 4, 3, 3, 6, 5, 5, 4, 0, 0, 0, 0}, 
+            { 0, 0, 0, 0, 0, 0, 0, 1, 5, 5, 5, 7, 0, 0, 1, 5, 4, 6, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 3, 8, 0, 0, 1, 0, 0, 0, 0},
+            { 0, 0, 0, 0, 0, 0, 1, 4, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 6, 7, 0, 0, 0, 0, 0, 1, 5, 5, 5, 5, 5, 7, 0, 0, 1, 5, 5, 5, 5, 5, 5, 4, 3, 3, 6, 5, 5, 4, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 6, 7, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 6, 5, 5, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0},
             { 0, 0, 0, 0, 1, 4, 3, 3, 3, 3, 3, 8, 0, 0, 2, 3, 3, 3, 3, 3, 3, 8, 0, 0, 1, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0},
             }, 128);
@@ -136,54 +166,65 @@ namespace NinjOut
 
             // TODO: Add your update logic here
             //gitcenas 
-            player.Update(gameTime);
 
-            for (int i = 0; i < enemyArray.Length; i++)
+            if (didGameStart)
             {
-                enemyArray[i].Update(gameTime);
-            }
 
-            foreach (CollisionTiles tile in map.CollisionTiles)
-            {
-                player.Collision(tile.Rectangle, map.Width, map.Height);
+
+                player.Update(gameTime);
+
                 for (int i = 0; i < enemyArray.Length; i++)
                 {
-                    enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                    enemyArray[i].Update(gameTime);
                 }
-                camera.Update(player.Position, map.Width, map.Height);
-            }
 
-            if (player.Position.X >= (scrolling1.rectangle.X+scrolling1.rectangle.Width / 2) && scrolling2.rectangle.X<scrolling1.rectangle.X)
+                foreach (CollisionTiles tile in map.CollisionTiles)
+                {
+                    player.Collision(tile.Rectangle, map.Width, map.Height);
+                    for (int i = 0; i < enemyArray.Length; i++)
+                    {
+                        enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                    }
+                }
+
+                //if (player.Position.X >= (scrolling1.rectangle.X + scrolling1.rectangle.Width / 2) && scrolling2.rectangle.X < scrolling1.rectangle.X)
+                //{
+                //    scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.rectangle.Width;
+                //}
+                //if (player.Position.X <= scrolling1.rectangle.Width / 2)
+                //{
+                //    scrolling2.rectangle.X = scrolling1.rectangle.X - scrolling1.texture.Width;
+                //}
+                //if (player.Position.X >= (scrolling2.rectangle.X + scrolling2.rectangle.Width / 2) && scrolling1.rectangle.X < scrolling2.rectangle.X)
+                //{
+                //    scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.rectangle.Width;
+                //}
+                //if (player.Position.X <= scrolling2.rectangle.Width / 2)
+                //{
+                //    scrolling1.rectangle.X = scrolling2.rectangle.X - scrolling2.texture.Width;
+                //}
+
+
+                ////Scrolling Backgrounds
+                //if (scrolling1.rectangle.X + scrolling1.texture.Width <= 0)
+                //{
+                //    scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.texture.Width;
+                //}
+
+                //if (scrolling2.rectangle.X + scrolling2.texture.Width <= 0)
+                //{
+                //    scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.texture.Width;
+                //}
+
+                scrolling1.Update();
+                scrolling2.Update();
+            }
+            else
             {
-                scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.rectangle.Width;
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    didGameStart = true;
             }
-            //if (player.Position.X <= scrolling1.rectangle.Width / 2)
-            //{
-            //    scrolling2.rectangle.X = scrolling1.rectangle.X - scrolling1.texture.Width;
-            //}
-            if (player.Position.X >= (scrolling2.rectangle.X+scrolling2.rectangle.Width / 2) && scrolling1.rectangle.X < scrolling2.rectangle.X)
-            {
-                scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.rectangle.Width;
-            }
-            //if (player.Position.X <= scrolling2.rectangle.Width / 2)
-            //{
-            //    scrolling1.rectangle.X = scrolling2.rectangle.X - scrolling2.texture.Width;
-            //}
-
-
-            ////Scrolling Backgrounds
-            //if (scrolling1.rectangle.X + scrolling1.texture.Width <= 0)
-            //{
-            //    scrolling1.rectangle.X = scrolling2.rectangle.X + scrolling2.texture.Width;
-            //}
-
-            //if (scrolling2.rectangle.X + scrolling2.texture.Width <= 0)
-            //{
-            //    scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.texture.Width;
-            //}
-
-            scrolling1.Update();
-            scrolling2.Update();
+            camera.Update(player.Position, map.Width, map.Height);
 
             base.Update(gameTime);
         }
@@ -194,24 +235,47 @@ namespace NinjOut
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-           GraphicsDevice.Clear(Color.CornflowerBlue);
+            if (!didGameStart)
+                GraphicsDevice.Clear(Color.Black);
+            else
+                GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,null, null, null, null, camera.Transform);
 
-            scrolling1.Draw(spriteBatch);
-            scrolling2.Draw(spriteBatch);
-            map.Draw(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
 
-            //player.Draw(spriteBatch, new Vector2(400, 200));
-            player.Draw(spriteBatch);
-
-            for (int i = 0; i < enemyArray.Length; i++)
+            if (!didGameStart)
             {
-                enemyArray[i].Draw(spriteBatch);
+                spriteBatch.DrawString(font, "Press Enter to play, Esc to quit", new Vector2(150, 540), Color.White);
+            }
+            else
+            {
+                scrolling1.Draw(spriteBatch);
+                scrolling2.Draw(spriteBatch);
+                scrolling3.Draw(spriteBatch);
+                scrolling4.Draw(spriteBatch);
+                scrolling5.Draw(spriteBatch);
+                scrolling6.Draw(spriteBatch);
+                scrolling7.Draw(spriteBatch);
+                scrolling8.Draw(spriteBatch);
+                scrolling9.Draw(spriteBatch);
+                scrolling10.Draw(spriteBatch);
+                map.Draw(spriteBatch);
+
+                //player.Draw(spriteBatch, new Vector2(400, 200));
+                player.Draw(spriteBatch);
+
+                for (int i = 0; i < enemyArray.Length; i++)
+                {
+                    enemyArray[i].Draw(spriteBatch);
+                }
+
+
+                // TODO: Add your drawing code here
             }
 
             spriteBatch.End();
-            // TODO: Add your drawing code here
+
+
 
             base.Draw(gameTime);
         }
