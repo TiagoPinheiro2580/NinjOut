@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Media;
 
 namespace NinjOut
 {
@@ -22,6 +23,7 @@ namespace NinjOut
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
+        public int health, currentHealth;
 
         //public Texture2D texturaFixe;
         private Vector2 position = new Vector2(64, 384);
@@ -33,6 +35,8 @@ namespace NinjOut
         bool flip = false;
 
         private bool hasJumped = false;
+        public Song attackSound;
+
 
         public Vector2 Position
         {
@@ -56,6 +60,7 @@ namespace NinjOut
             GlideTexture = Content.Load<Texture2D>("GlideSpriteSheet");
             AttackTexture = Content.Load<Texture2D>("AttackSpriteSheet");
             DeadTexture = Content.Load<Texture2D>("DeadSpriteSheet");
+            attackSound = Content.Load<Song>("ataque");
             currentTexture = IdleTexture;
             oldTexture = currentTexture;
         }
@@ -125,6 +130,14 @@ namespace NinjOut
             {
                 sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
             }
+
+            if (currentTexture == AttackTexture)
+            {
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
+                MediaPlayer.Play(attackSound);
+
+            }
+
             else
             {
                 sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
@@ -172,6 +185,10 @@ namespace NinjOut
                 velocity.X = 0f;
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                currentTexture = AttackTexture;
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
             {

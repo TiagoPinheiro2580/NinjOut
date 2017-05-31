@@ -32,6 +32,8 @@ namespace NinjOut
         bool didGameStart = false;
         SpriteFont font;
 
+        Song backgroundMusic;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -73,6 +75,7 @@ namespace NinjOut
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
             player = new Player();
             font = Content.Load<SpriteFont>("DefaultFont");
+            MediaPlayer.Play(Content.Load<Song>("backgroundMusic"));
 
             for (int i = 0; i < enemyArray.Length; i++)
             {
