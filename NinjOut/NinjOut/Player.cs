@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace NinjOut
 {
-    class Player
+    public class Player
     {
         public Texture2D WalkTexture, currentTexture, oldTexture;
         public Texture2D JumpTexture;
@@ -33,6 +33,7 @@ namespace NinjOut
         int frames = 0;
         int row, colum;
         bool flip = false;
+        public bool gameOver = false;
 
         private bool hasJumped = false;
         public Song attackSound;
@@ -76,7 +77,10 @@ namespace NinjOut
 
             //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
-
+            if (position.Y>1300)
+            {
+                gameOver = true;
+            }
 
             position += velocity;
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
@@ -269,6 +273,7 @@ namespace NinjOut
             if (flip)
                 spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f);
             else
+
                 spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.None , 0f);
 
         }
