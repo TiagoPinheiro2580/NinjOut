@@ -166,7 +166,7 @@ namespace NinjOut
                     player.Collision(tile.Rectangle, map.Width, map.Height);
                     for (int i = 0; i < enemyArray.Length; i++)
                     {
-                        enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height, player.rectangle, false);
+                        enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
                     }
                 }
 
@@ -313,7 +313,8 @@ namespace NinjOut
 
                 //player.Draw(spriteBatch, new Vector2(400, 200));
                 player.Draw(spriteBatch);
-                spriteBatch.DrawString(font, "Health: " + player.health, player.Position - new Vector2(900, 500), Color.Red);
+                spriteBatch.DrawString(font, "Health: " + player.health, player.Position + new Vector2(300, -500), Color.Red);
+                spriteBatch.DrawString(font, " " + player.points, player.Position - new Vector2(900, 500), Color.Red);
 
 
                 for (int i = 0; i < enemyArray.Length; i++)

@@ -23,6 +23,7 @@ namespace NinjOut
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
+        public int health = 30;
 
         //public Texture2D texturaFixe;
         // Novos erros no github
@@ -50,7 +51,7 @@ namespace NinjOut
 
         public void Load(ContentManager Content)
         {
-            position = new Vector2(6300, 15);
+            position = new Vector2(6700, 15);
             WalkTexture = Content.Load<Texture2D>("WalkSpritSheetEnemy");
             ShootTexture = Content.Load<Texture2D>("ShootSpriteSheetEnemy");
             IdleTexture = Content.Load<Texture2D>("IdleSpriteSheetEnemy");
@@ -94,8 +95,25 @@ namespace NinjOut
                     //Console.WriteLine(player.Position.X - position.X);
                 }
             }
-           
-            
+
+            if (player.Position.X < Math.Abs(30))
+            {
+                currentTexture = WalkTexture;
+            }
+
+            if (player.Position.X < Math.Abs(10))
+            {
+                currentTexture = AttackTexture;
+            }
+
+            if (health < 0)
+            {
+                health = 0;
+                player.points += 30;
+                currentTexture = DeadTexture;
+            }
+
+
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
 
@@ -130,12 +148,30 @@ namespace NinjOut
             //}
             //else
             //{
-                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+            sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
             //}
 
             if (currentTexture == IdleTexture)
             {
-                rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 9, currentTexture.Height);
+                rectangle = new Rectangle((int)position.X, (int)position.Y, currentTexture.Width / 10, currentTexture.Height);
+
+            }
+
+            if (currentTexture == WalkTexture)
+            {
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+
+            }
+
+            if (currentTexture == AttackTexture)
+            {
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+
+            }
+
+            if (currentTexture == DeadTexture)
+            {
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
 
             }
 
@@ -183,14 +219,8 @@ namespace NinjOut
 
         //}
 
-        public void Collision(Rectangle newRectangle, int xOffset, int yOffset, Rectangle playerRectangle, bool isAttacking)
+        public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
         {
-            this.playerRectangle = playerRectangle;
-            if (playerRectangle.Intersects(rectangle))
-            {
-                         isAttacking = true;
-            }
-
             if (rectangle.TouchTopOf(newRectangle))
             {
                 // rectangle.Y = newRectangle.Y - rectangle.Height;
