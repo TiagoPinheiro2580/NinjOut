@@ -34,7 +34,7 @@ namespace NinjOut
         int row, colum;
         bool flip = false;
         public bool gameOver = false;
-
+        public bool nextLevel = false;
         private bool hasJumped = false;
         public Song attackSound;
 
@@ -80,6 +80,12 @@ namespace NinjOut
             if (position.Y>1300)
             {
                 gameOver = true;
+            }
+
+
+            if (position.X > 8800 && nextLevel == false)
+            {
+                nextLevel = true;
             }
 
             position += velocity;
