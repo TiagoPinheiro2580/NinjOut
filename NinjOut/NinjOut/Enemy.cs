@@ -35,7 +35,11 @@ namespace NinjOut
         int frames = 0;
         int row, colum;
         bool flip = false;
-
+        public bool isAttacking = false;
+        public bool isPlayerAttack = false;
+        public int xPosEnemy = 6700;
+        bool isDead = false;
+        
         public Vector2 Position
         {
             get { return position; }
@@ -51,7 +55,8 @@ namespace NinjOut
 
         public void Load(ContentManager Content)
         {
-            position = new Vector2(6700, 15);
+            //position = new Vector2(6700, 15);
+            position = new Vector2(xPosEnemy, 15);
             WalkTexture = Content.Load<Texture2D>("WalkSpritSheetEnemy");
             ShootTexture = Content.Load<Texture2D>("ShootSpriteSheetEnemy");
             IdleTexture = Content.Load<Texture2D>("IdleSpriteSheetEnemy");
@@ -73,74 +78,128 @@ namespace NinjOut
 
             //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
-
-            if (player.Position.X>5900)
+            if (isDead == false)
             {
-                velocity.X = 0;
-
-                for (int i = 0; i < 4; i++)
+                if (player.Position.X > 5900)
                 {
-                    if (player.Position.X - position.X > 170)
-                    {
-                        velocity.X += 1;
-                        flip = false;
-                    }
-                    else if (player.Position.X - position.X+1 < -170)
-                    {
-                        velocity.X -= 1;
-                        flip = true;
-                    }
-                    else break;
+                    velocity.X = 0;
 
-                    //Console.WriteLine(player.Position.X - position.X);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (player.Position.X - position.X > 170)
+                        {
+                            velocity.X += 1;
+                            flip = false;
+                        }
+                        else if (player.Position.X - position.X + 1 < -170)
+                        {
+                            velocity.X -= 1;
+                            flip = true;
+                        }
+                        else break;
+
+                        //Console.WriteLine(player.Position.X - position.X);
+                    }
                 }
+
+
+                if (Vector2.Distance(player.Position, position) < 200 && isAttacking == false)
+                {
+                    currentTexture = AttackTexture;
+                    player.health -= 1;
+                    isAttacking = true;
+
+                }
+
+
+                if (Vector2.Distance(player.Position, position) > 200 && Vector2.Distance(player.Position, position) < 500)
+                {
+                    currentTexture = WalkTexture;
+                    isAttacking = false;
+                }
+
+                if (Vector2.Distance(player.Position, position) > 500)
+                {
+                    currentTexture = IdleTexture;
+                }
+
             }
 
-            if (player.Position.X < Math.Abs(30))
+            //Ataque do player
+            if (Vector2.Distance(player.Position, position) < 200)
             {
-                currentTexture = WalkTexture;
+                if (player.currentTexture == player.AttackTexture && isPlayerAttack == false)
+                {
+                    health -= 30;
+                    isPlayerAttack = true;
+                }
+
             }
 
-            if (player.Position.X < Math.Abs(10))
+            if (Vector2.Distance(player.Position, position) > 200)
             {
-                currentTexture = AttackTexture;
+                if (player.currentTexture == player.WalkTexture)
+                {
+                    isPlayerAttack = false;
+                }
+
             }
 
-            if (health < 0)
+
+            //else
+            //{
+            //    currentFrame = IdleTextur;
+            //}
+
+            //if (player.Position.X < Math.Abs(3))
+            //{
+            //    currentTexture = WalkTexture;
+            //}
+
+            //if (player.Position.X < Math.Abs(1))
+            //{
+            //    currentTexture = AttackTexture;
+            //}
+
+            if (health <= 0 && isDead == false)
             {
                 health = 0;
                 player.points += 30;
                 currentTexture = DeadTexture;
+                isDead = true;
+                return;
+                
             }
 
 
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
 
-            //if (currentTexture != oldTexture)
-            //{
-            //    oldTexture = currentTexture;
-            //    currentFrame = 0;
-            //    frames = 0;
-            //}
+            if (currentTexture != oldTexture)
+            {
+                oldTexture = currentTexture;
+                currentFrame = 0;
+                frames = 0;
+            }
 
-            //frames++;
+            frames++;
 
-            //if (frames > 5)
-            //{
-            //    currentFrame++;
-            //    if (currentFrame > 9)
-            //        currentFrame = 0;
+            if (frames > 5)
+            {
+                currentFrame++;
+                if (currentFrame > 9)
+                    currentFrame = 0;
 
-            //    frames = 0;
-            //    colum = (int)((columnsWidth / 10) * currentFrame);
+                frames = 0;
+                colum = (int)((columnsWidth / 10) * currentFrame);
 
-            //}
+            }
 
-            //if (currentFrame == totalFrames)
-            //{
-            //    currentFrame = 0;
-            //}
+            if (currentFrame == totalFrames)
+            {
+                currentFrame = 0;
+            }
+
 
             //if (currentTexture == WalkTexture)
             //{
@@ -165,7 +224,7 @@ namespace NinjOut
 
             if (currentTexture == AttackTexture)
             {
-                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width/10, currentTexture.Height);
 
             }
 

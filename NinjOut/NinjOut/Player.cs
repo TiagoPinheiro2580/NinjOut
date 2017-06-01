@@ -46,12 +46,13 @@ namespace NinjOut
             get { return position; }
         }
 
-        public Player()
+        public Player(Enemy enemy)
         {
             //frameSize = new Point(95, 195);
             frameSize = new Point(50, 90);
             currentFrame = 0;
             totalFrames = Rows * Columns;
+            this.enemy = enemy;
         }
 
         public void Load(ContentManager Content)
@@ -76,6 +77,9 @@ namespace NinjOut
             //height = Texture.Height / Rows;
             float columnsWidth = currentTexture.Width;
             row = (currentTexture.Height / 2) * 0;
+
+
+
 
             //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);

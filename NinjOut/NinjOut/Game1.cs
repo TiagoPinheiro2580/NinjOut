@@ -28,12 +28,17 @@ namespace NinjOut
         Scrolling scrolling9;
         Scrolling scrolling10;
 
+        Texture2D menuImage, gameOverImage;
+
         Enemy[] enemyArray = new Enemy[5];
         bool didGameStart = false;
         SpriteFont font;
         bool gameOver = false;
         Song backgroundMusic;
         int levelToLoad = 1;
+        Enemy enemy;
+        Rectangle rectangleImage;
+
 
         public Game1()
         {
@@ -74,13 +79,24 @@ namespace NinjOut
             spriteBatch = new SpriteBatch(GraphicsDevice);
             camera = new Camera(GraphicsDevice.Viewport);
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
-            player = new Player();
+            player = new Player(enemy);
             font = Content.Load<SpriteFont>("DefaultFont");
             MediaPlayer.Play(Content.Load<Song>("backgroundMusic"));
 
-            for (int i = 0; i < enemyArray.Length; i++)
+            rectangleImage.Width = 1920;
+            rectangleImage.Height = 1090;
+            for (int i = 0; i < 5; i++)
             {
+                
+
                 enemyArray[i] = new Enemy(player);
+
+                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy +100;
+                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 200;
+                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 300;
+                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 400;
+                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 500;
+
                 enemyArray[i].Load(Content);
             }
 
@@ -94,6 +110,9 @@ namespace NinjOut
             scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
             scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
             scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+
+            menuImage = this.Content.Load<Texture2D>("Menu");
+            gameOverImage = this.Content.Load<Texture2D>("gameover");
 
 
             scrolling2.rectangle.X = scrolling1.rectangle.X + scrolling1.rectangle.Width;
@@ -158,7 +177,10 @@ namespace NinjOut
 
                 for (int i = 0; i < enemyArray.Length; i++)
                 {
+
                     enemyArray[i].Update(gameTime);
+
+                    
                 }
 
                 foreach (CollisionTiles tile in map.CollisionTiles)
@@ -267,7 +289,7 @@ namespace NinjOut
         {
             camera = new Camera(GraphicsDevice.Viewport);
             //AnimatedPlayerWalking = Content.Load<Texture2D>("ArmySprite");
-            player = new Player();
+            player = new Player(enemy);
             
             font = Content.Load<SpriteFont>("DefaultFont");
             MediaPlayer.Play(Content.Load<Song>("backgroundMusic"));
@@ -292,13 +314,16 @@ namespace NinjOut
             if (!didGameStart)
             {
                 if (gameOver)
-                    spriteBatch.DrawString(font, "                Game Over\nPress Enter to play, Esc to quit", new Vector2(150, 540), Color.White);
+                    spriteBatch.Draw(gameOverImage,rectangleImage, Color.White);
+                   // spriteBatch.DrawString(font, "                Game Over\nPress Enter to play, Esc to quit", new Vector2(150, 540), Color.White);
                 else
-                    spriteBatch.DrawString(font, "Press Enter to play, Esc to quit", new Vector2(150, 540), Color.White);
+                    spriteBatch.Draw(menuImage,rectangleImage, Color.White);
+                //spriteBatch.DrawString(font, "Press Enter to play, Esc to quit", new Vector2(150, 540), Color.White);
 
             }
             else
             {
+                
                 scrolling1.Draw(spriteBatch);
                 scrolling2.Draw(spriteBatch);
                 scrolling3.Draw(spriteBatch);
@@ -319,6 +344,8 @@ namespace NinjOut
 
                 for (int i = 0; i < enemyArray.Length; i++)
                 {
+                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 100;
+
                     enemyArray[i].Draw(spriteBatch);
                 }
 
