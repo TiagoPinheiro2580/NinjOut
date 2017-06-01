@@ -18,6 +18,7 @@ namespace NinjOut
         public Texture2D DeadTexture;
         public Texture2D AttackTexture;
         Player player;
+        private Rectangle playerRectangle;
 
         private int Rows { get; set; }
         public int Columns { get; set; }
@@ -49,7 +50,7 @@ namespace NinjOut
 
         public void Load(ContentManager Content)
         {
-            position = new Vector2(6100, 15);
+            position = new Vector2(6300, 15);
             WalkTexture = Content.Load<Texture2D>("WalkSpritSheetEnemy");
             ShootTexture = Content.Load<Texture2D>("ShootSpriteSheetEnemy");
             IdleTexture = Content.Load<Texture2D>("IdleSpriteSheetEnemy");
@@ -182,8 +183,14 @@ namespace NinjOut
 
         //}
 
-        public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
+        public void Collision(Rectangle newRectangle, int xOffset, int yOffset, Rectangle playerRectangle, bool isAttacking)
         {
+            this.playerRectangle = playerRectangle;
+            if (playerRectangle.Intersects(rectangle))
+            {
+                         isAttacking = true;
+            }
+
             if (rectangle.TouchTopOf(newRectangle))
             {
                 // rectangle.Y = newRectangle.Y - rectangle.Height;
@@ -248,7 +255,7 @@ namespace NinjOut
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
             //Rectangle rectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
-            //OLE
+            
             if (flip)
                 spriteBatch.Draw(currentTexture, rectangle, sourceRectangle, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f);
             else

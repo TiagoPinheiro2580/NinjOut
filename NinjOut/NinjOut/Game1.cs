@@ -142,7 +142,6 @@ namespace NinjOut
             if (didGameStart)
             {
 
-
                 player.Update(gameTime);
 
                 if (player.gameOver)
@@ -167,7 +166,7 @@ namespace NinjOut
                     player.Collision(tile.Rectangle, map.Width, map.Height);
                     for (int i = 0; i < enemyArray.Length; i++)
                     {
-                        enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                        enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height, player.rectangle, false);
                     }
                 }
 
@@ -280,16 +279,13 @@ namespace NinjOut
             }
             player.Load(Content);            
             LoadMap();
-
         }
-
         protected override void Draw(GameTime gameTime)
         {
             if (!didGameStart)
                 GraphicsDevice.Clear(Color.Black);
             else
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
 
@@ -317,6 +313,8 @@ namespace NinjOut
 
                 //player.Draw(spriteBatch, new Vector2(400, 200));
                 player.Draw(spriteBatch);
+                spriteBatch.DrawString(font, "Health: " + player.health, player.Position - new Vector2(900, 500), Color.Red);
+
 
                 for (int i = 0; i < enemyArray.Length; i++)
                 {
@@ -328,9 +326,7 @@ namespace NinjOut
             }
 
             spriteBatch.End();
-
-
-
+            
             base.Draw(gameTime);
         }
     }

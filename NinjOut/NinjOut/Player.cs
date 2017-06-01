@@ -23,12 +23,12 @@ namespace NinjOut
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
-        public int health, currentHealth;
+        public int health = 100, currentHealth;
 
         //public Texture2D texturaFixe;
         private Vector2 position = new Vector2(64, 384);
         public Vector2 velocity;
-        private Rectangle rectangle, sourceRectangle;
+        public Rectangle rectangle, sourceRectangle;
         Point frameSize;
         int frames = 0;
         int row, colum;
@@ -37,6 +37,7 @@ namespace NinjOut
         public bool nextLevel = false;
         private bool hasJumped = false;
         public Song attackSound;
+        Enemy enemy;
 
 
         public Vector2 Position
@@ -93,6 +94,10 @@ namespace NinjOut
 
             //rectangle = new Rectangle((int)position.X, (int)position.Y, frameSize.X, frameSize.Y);
 
+            //if (enemy.currentTexture == AttackTexture) //FAzer o resto com as colisoes 
+            //{
+            //    health -= 20;
+            //}
 
             if (Keyboard.GetState().IsKeyDown(Keys.D) || (Keyboard.GetState().IsKeyDown(Keys.A)))
                 currentTexture = WalkTexture;
@@ -209,6 +214,7 @@ namespace NinjOut
             }
 
         }
+
 
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
         {
