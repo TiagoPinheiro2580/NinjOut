@@ -39,7 +39,13 @@ namespace NinjOut
         public bool isPlayerAttack = false;
         public int xPosEnemy = 6700;
         bool isDead = false;
-        
+
+
+        //int counter = 1;
+       // int limit = 3;
+        float countDuration = 0.7f; //every  2s.
+        float currentTime = 0f;
+
         public Vector2 Position
         {
             get { return position; }
@@ -98,7 +104,6 @@ namespace NinjOut
                         }
                         else break;
 
-                        //Console.WriteLine(player.Position.X - position.X);
                     }
                 }
 
@@ -112,13 +117,13 @@ namespace NinjOut
                 }
 
 
-                if (Vector2.Distance(player.Position, position) > 200 && Vector2.Distance(player.Position, position) < 500)
+                if (Vector2.Distance(player.Position, position) > 200 && Vector2.Distance(player.Position, position) < 1000)
                 {
                     currentTexture = WalkTexture;
                     isAttacking = false;
                 }
 
-                if (Vector2.Distance(player.Position, position) > 500)
+                if (Vector2.Distance(player.Position, position) > 1000)
                 {
                     currentTexture = IdleTexture;
                 }
@@ -146,20 +151,6 @@ namespace NinjOut
             }
 
 
-            //else
-            //{
-            //    currentFrame = IdleTextur;
-            //}
-
-            //if (player.Position.X < Math.Abs(3))
-            //{
-            //    currentTexture = WalkTexture;
-            //}
-
-            //if (player.Position.X < Math.Abs(1))
-            //{
-            //    currentTexture = AttackTexture;
-            //}
 
             if (health <= 0 && isDead == false)
             {
@@ -187,20 +178,45 @@ namespace NinjOut
             if (frames > 5)
             {
                 currentFrame++;
-                if (currentFrame > 9)
-                    currentFrame = 0;
-
+                if (currentTexture == WalkTexture || currentTexture == AttackTexture)
+                {
+                    if (currentFrame > 7)
+                        currentFrame = 0;
+                }
+                else
+                {
+                    if (currentFrame > 9)
+                        currentFrame = 0;
+                }
                 frames = 0;
-                colum = (int)((columnsWidth / 10) * currentFrame);
+                if (currentTexture == WalkTexture || currentTexture == AttackTexture)
+                {
+                    colum = (int)((columnsWidth / 8) * currentFrame);
+                }
+                else
+                {
+                    colum = (int)((columnsWidth / 10) * currentFrame);
+                }
 
             }
+
 
             if (currentFrame == totalFrames)
             {
                 currentFrame = 0;
             }
 
+            if (currentTexture == DeadTexture)
+            {
+                currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update() 
 
+                if (currentTime >= countDuration)
+                {
+                    frames = 0;
+
+                }
+
+            }
             //if (currentTexture == WalkTexture)
             //{
             //    sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
@@ -218,7 +234,9 @@ namespace NinjOut
 
             if (currentTexture == WalkTexture)
             {
+                
                 sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+
 
             }
 
@@ -231,6 +249,7 @@ namespace NinjOut
             if (currentTexture == DeadTexture)
             {
                 sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
+
 
             }
 
@@ -249,34 +268,7 @@ namespace NinjOut
 
         }
 
-        //private void Input(GameTime gameTime)
-        //{
-        //    if (Keyboard.GetState().IsKeyDown(Keys.D))
-        //    {
-        //        velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
-        //        flip = false;
-        //    }
-        //    else if (Keyboard.GetState().IsKeyDown(Keys.A))
-        //    {
 
-        //        velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
-        //        flip = true;
-        //    }
-        //    else
-        //    {
-        //        velocity.X = 0f;
-        //    }
-
-
-        //    //if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
-        //    //{
-        //    //    position.Y -= 15f;
-        //    //    velocity.Y = -11f;
-        //    //    hasJumped = true;
-
-        //    //}
-
-        //}
 
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
         {
