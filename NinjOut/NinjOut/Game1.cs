@@ -27,6 +27,16 @@ namespace NinjOut
         Scrolling scrolling8;
         Scrolling scrolling9;
         Scrolling scrolling10;
+        Scrolling scrolling11;
+        Scrolling scrolling12;
+        Scrolling scrolling13;
+        Scrolling scrolling14;
+        Scrolling scrolling15;
+        Scrolling scrolling16;
+        Scrolling scrolling17;
+        Scrolling scrolling18;
+        Scrolling scrolling19;
+        Scrolling scrolling20;
 
         Texture2D menuImage, gameOverImage;
 
@@ -91,17 +101,11 @@ namespace NinjOut
 
                 enemyArray[i] = new Enemy(player);
 
-                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy +100;
-                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 200;
-                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 300;
-                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 400;
-                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 500;
+                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + i * 500;
 
                 enemyArray[i].Load(Content);
             }
 
-            if (levelToLoad == 1)
-            {
                 scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
                 scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
                 scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
@@ -112,21 +116,17 @@ namespace NinjOut
                 scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
                 scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
                 scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
-            }
+                scrolling11 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling12 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling13 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling14 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling15 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling16 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling17 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling18 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling19 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling20 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Cave2"), new Rectangle(0, 0, 2200, 1600));
 
-            if (levelToLoad == 2)
-            {
-                scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
-                scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
-                scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
-                scrolling4 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
-                scrolling5 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
-                scrolling6 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
-                scrolling7 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
-                scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
-                scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
-                scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
-            }
 
             menuImage = this.Content.Load<Texture2D>("newMenu");
             gameOverImage = this.Content.Load<Texture2D>("gameover");
@@ -141,6 +141,17 @@ namespace NinjOut
             scrolling8.rectangle.X = scrolling7.rectangle.X + scrolling7.rectangle.Width;
             scrolling9.rectangle.X = scrolling8.rectangle.X + scrolling8.rectangle.Width;
             scrolling10.rectangle.X = scrolling9.rectangle.X + scrolling9.rectangle.Width;
+
+
+            scrolling12.rectangle.X = scrolling11.rectangle.X+ scrolling11.rectangle.Width;
+            scrolling13.rectangle.X = scrolling12.rectangle.X+ scrolling12.rectangle.Width;
+            scrolling14.rectangle.X = scrolling13.rectangle.X + scrolling13.rectangle.Width;
+            scrolling15.rectangle.X = scrolling14.rectangle.X + scrolling14.rectangle.Width;
+            scrolling16.rectangle.X = scrolling15.rectangle.X + scrolling15.rectangle.Width;
+            scrolling17.rectangle.X = scrolling16.rectangle.X + scrolling16.rectangle.Width;
+            scrolling18.rectangle.X = scrolling17.rectangle.X + scrolling17.rectangle.Width;
+            scrolling19.rectangle.X = scrolling18.rectangle.X + scrolling18.rectangle.Width;
+            scrolling20.rectangle.X = scrolling19.rectangle.X + scrolling19.rectangle.Width;
 
             Tile.Content = Content;
             LoadMap();
@@ -177,7 +188,6 @@ namespace NinjOut
 
             if (didGameStart)
             {
-
                 player.Update(gameTime);
 
                 if (player.gameOver)
@@ -262,6 +272,7 @@ namespace NinjOut
         
         void LoadMap()
         {
+            map = new Map();
             if (levelToLoad == 1)
             {
                 map.Generate(new int[,]
@@ -319,8 +330,8 @@ namespace NinjOut
             }
             player.Load(Content);            
             LoadMap();
-            scrolling1.Update();
-            scrolling2.Update();
+            //scrolling1.Update();
+            //scrolling2.Update();
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -343,17 +354,32 @@ namespace NinjOut
             }
             else
             {
-                
-                scrolling1.Draw(spriteBatch);
-                scrolling2.Draw(spriteBatch);
-                scrolling3.Draw(spriteBatch);
-                scrolling4.Draw(spriteBatch);
-                scrolling5.Draw(spriteBatch);
-                scrolling6.Draw(spriteBatch);
-                scrolling7.Draw(spriteBatch);
-                scrolling8.Draw(spriteBatch);
-                scrolling9.Draw(spriteBatch);
-                scrolling10.Draw(spriteBatch);
+                if (levelToLoad == 1)
+                {
+                    scrolling1.Draw(spriteBatch);
+                    scrolling2.Draw(spriteBatch);
+                    scrolling3.Draw(spriteBatch);
+                    scrolling4.Draw(spriteBatch);
+                    scrolling5.Draw(spriteBatch);
+                    scrolling6.Draw(spriteBatch);
+                    scrolling7.Draw(spriteBatch);
+                    scrolling8.Draw(spriteBatch);
+                    scrolling9.Draw(spriteBatch);
+                    scrolling10.Draw(spriteBatch);
+                }
+                if (levelToLoad == 2)
+                {
+                    scrolling11.Draw(spriteBatch);
+                    scrolling12.Draw(spriteBatch);
+                    scrolling13.Draw(spriteBatch);
+                    scrolling14.Draw(spriteBatch);
+                    scrolling15.Draw(spriteBatch);
+                    scrolling16.Draw(spriteBatch);
+                    scrolling17.Draw(spriteBatch);
+                    scrolling18.Draw(spriteBatch);
+                    scrolling19.Draw(spriteBatch);
+                    scrolling20.Draw(spriteBatch);
+                }
                 map.Draw(spriteBatch);
 
                 //player.Draw(spriteBatch, new Vector2(400, 200));
