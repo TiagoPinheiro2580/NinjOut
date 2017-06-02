@@ -100,18 +100,35 @@ namespace NinjOut
                 enemyArray[i].Load(Content);
             }
 
-            scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
-            scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
-            scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
-            scrolling4 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
-            scrolling5 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
-            scrolling6 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
-            scrolling7 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
-            scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
-            scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
-            scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+            if (levelToLoad == 1)
+            {
+                scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling4 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling5 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling6 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling7 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
+            }
 
-            menuImage = this.Content.Load<Texture2D>("Menu");
+            if (levelToLoad == 2)
+            {
+                scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling4 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling5 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling6 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling7 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling8 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
+                scrolling9 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back1"), new Rectangle(0, 0, 2200, 1600));
+                scrolling10 = new Scrolling(Content.Load<Texture2D>("Backgrounds/back2"), new Rectangle(0, 0, 2200, 1600));
+            }
+
+            menuImage = this.Content.Load<Texture2D>("newMenu");
             gameOverImage = this.Content.Load<Texture2D>("gameover");
 
 
@@ -168,6 +185,7 @@ namespace NinjOut
                     didGameStart = false;
                     gameOver = true;
                     Restart();
+
                 }
                 if (player.nextLevel)
                 {
@@ -280,7 +298,7 @@ namespace NinjOut
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-            { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ,3 ,3 ,3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+            { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
             }, 128);
             }
         }
@@ -301,6 +319,8 @@ namespace NinjOut
             }
             player.Load(Content);            
             LoadMap();
+            scrolling1.Update();
+            scrolling2.Update();
         }
         protected override void Draw(GameTime gameTime)
         {

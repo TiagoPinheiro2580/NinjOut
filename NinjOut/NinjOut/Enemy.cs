@@ -108,7 +108,7 @@ namespace NinjOut
                 }
 
 
-                if (Vector2.Distance(player.Position, position) < 200 && isAttacking == false)
+                if (Vector2.Distance(player.Position, position) < 150 && isAttacking == false)
                 {
                     currentTexture = AttackTexture;
                     player.health -= 1;
@@ -117,7 +117,7 @@ namespace NinjOut
                 }
 
 
-                if (Vector2.Distance(player.Position, position) > 200 && Vector2.Distance(player.Position, position) < 1000)
+                if (Vector2.Distance(player.Position, position) > 150 && Vector2.Distance(player.Position, position) < 1000)
                 {
                     currentTexture = WalkTexture;
                     isAttacking = false;
@@ -131,7 +131,7 @@ namespace NinjOut
             }
 
             //Ataque do player
-            if (Vector2.Distance(player.Position, position) < 200)
+            if (Vector2.Distance(player.Position, position) < 220)
             {
                 if (player.currentTexture == player.AttackTexture && isPlayerAttack == false)
                 {

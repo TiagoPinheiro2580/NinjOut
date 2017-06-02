@@ -150,12 +150,12 @@ namespace NinjOut
 
             if (currentTexture == WalkTexture)
             {
-                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
             }
 
             if (currentTexture == AttackTexture)
             {
-                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 11, currentTexture.Height);
+                sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
                 MediaPlayer.Play(attackSound);
 
             }
