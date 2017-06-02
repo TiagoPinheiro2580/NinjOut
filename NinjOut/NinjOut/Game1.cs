@@ -40,12 +40,12 @@ namespace NinjOut
 
         Texture2D menuImage, gameOverImage;
 
-        Enemy[] enemyArray = new Enemy[5];
+        Enemy[] enemyArray = new Enemy[20];
         bool didGameStart = false;
         SpriteFont font;
         bool gameOver = false;
         Song backgroundMusic;
-        int levelToLoad = 1;
+        public int levelToLoad = 1;
         Enemy enemy;
         Rectangle rectangleImage;
 
@@ -95,18 +95,34 @@ namespace NinjOut
 
             rectangleImage.Width = 1920;
             rectangleImage.Height = 1090;
-            for (int i = 0; i < 5; i++)
+
+            if (levelToLoad == 1)
             {
-                
+                for (int i = 0; i < 5; i++)
+                {
 
-                enemyArray[i] = new Enemy(player);
 
-                enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + i * 500;
+                    enemyArray[i] = new Enemy(player);
 
-                enemyArray[i].Load(Content);
+                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + i * 500;
+
+                    enemyArray[i].Load(Content);
+                }
             }
+            if (levelToLoad == 2)
+            {
+                for (int i = 0; i < 20; i++)
+                {
 
-                scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
+
+                    enemyArray[i] = new Enemy(player);
+
+                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy2 + i * 500;
+
+                    enemyArray[i].Load(Content);
+                }
+            }
+            scrolling1 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
                 scrolling2 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
                 scrolling3 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background1"), new Rectangle(0, 0, 2200, 1600));
                 scrolling4 = new Scrolling(Content.Load<Texture2D>("Backgrounds/Background2"), new Rectangle(0, 0, 2200, 1600));
@@ -202,21 +218,44 @@ namespace NinjOut
                     levelToLoad = 2;
                     Restart();
                 }
-
-                for (int i = 0; i < enemyArray.Length; i++)
+                //for (int i = 0; i < enemyArray.Length; i++)
+                if (levelToLoad == 1)
                 {
+                    for (int i = 0; i < 5; i++)
+                    {
 
-                    enemyArray[i].Update(gameTime);
+                        enemyArray[i].Update(gameTime);
+                        enemyArray[i].isLevel1 = true;
+                    }
+                }
 
-                    
+                if (levelToLoad == 2)
+                {
+                    for (int i = 0; i < enemyArray.Length; i++)
+                    {
+
+                        enemyArray[i].Update(gameTime);
+                        enemyArray[i].isLevel1 = false;
+
+                    }
                 }
 
                 foreach (CollisionTiles tile in map.CollisionTiles)
                 {
                     player.Collision(tile.Rectangle, map.Width, map.Height);
-                    for (int i = 0; i < enemyArray.Length; i++)
+                    if (levelToLoad == 1)
                     {
-                        enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                        }
+                    }
+                    if (levelToLoad == 2)
+                    {
+                        for (int i = 0; i < enemyArray.Length; i++)
+                        {
+                            enemyArray[i].Collision(tile.Rectangle, map.Width, map.Height);
+                        }
                     }
                 }
 
@@ -322,14 +361,29 @@ namespace NinjOut
             
             font = Content.Load<SpriteFont>("DefaultFont");
             MediaPlayer.Play(Content.Load<Song>("backgroundMusic"));
-            //
-            for (int i = 0; i < enemyArray.Length; i++)
+            
+            if (levelToLoad == 1)
             {
-                enemyArray[i] = new Enemy(player);
-                enemyArray[i].Load(Content);
+                for (int i = 0; i < 5; i++)
+                {
+                    enemyArray[i] = new Enemy(player);
+                    enemyArray[i].Load(Content);
+                }
+            }
+
+            if (levelToLoad == 2)
+            {
+                
+                for (int i = 0; i < 20; i++)
+                {
+                  
+                    enemyArray[i] = new Enemy(player);
+                    enemyArray[i].Load(Content);
+                }
             }
             player.Load(Content);            
             LoadMap();
+            LoadContent();
             //scrolling1.Update();
             //scrolling2.Update();
         }
@@ -356,6 +410,7 @@ namespace NinjOut
             {
                 if (levelToLoad == 1)
                 {
+
                     scrolling1.Draw(spriteBatch);
                     scrolling2.Draw(spriteBatch);
                     scrolling3.Draw(spriteBatch);
@@ -369,6 +424,7 @@ namespace NinjOut
                 }
                 if (levelToLoad == 2)
                 {
+
                     scrolling11.Draw(spriteBatch);
                     scrolling12.Draw(spriteBatch);
                     scrolling13.Draw(spriteBatch);
@@ -382,18 +438,33 @@ namespace NinjOut
                 }
                 map.Draw(spriteBatch);
 
+                if (levelToLoad == 1)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 100;
+
+                        enemyArray[i].Draw(spriteBatch);
+                    }
+                }
+
+                if (levelToLoad == 2)
+                {
+                    for (int i = 0; i < enemyArray.Length; i++)
+                    {
+                        enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 100;
+
+                        enemyArray[i].Draw(spriteBatch);
+                    }
+                }
+
                 //player.Draw(spriteBatch, new Vector2(400, 200));
                 player.Draw(spriteBatch);
                 spriteBatch.DrawString(font, "Health: " + player.health, player.Position + new Vector2(300, -500), Color.Red);
                 spriteBatch.DrawString(font, " " + player.points, player.Position - new Vector2(900, 500), Color.Red);
 
+                
 
-                for (int i = 0; i < enemyArray.Length; i++)
-                {
-                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + 100;
-
-                    enemyArray[i].Draw(spriteBatch);
-                }
 
 
                 // TODO: Add your drawing code here

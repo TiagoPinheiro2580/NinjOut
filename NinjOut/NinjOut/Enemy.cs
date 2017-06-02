@@ -19,7 +19,7 @@ namespace NinjOut
         public Texture2D AttackTexture;
         Player player;
         private Rectangle playerRectangle;
-
+        Game1 game1;
         private int Rows { get; set; }
         public int Columns { get; set; }
         public int currentFrame, totalFrames;
@@ -39,8 +39,8 @@ namespace NinjOut
         public bool isPlayerAttack = false;
         public int xPosEnemy = 6700;
         bool isDead = false;
-
-
+        public int xPosEnemy2 = 1000;
+        public bool isLevel1;
         //int counter = 1;
        // int limit = 3;
         float countDuration = 0.7f; //every  2s.
@@ -86,32 +86,60 @@ namespace NinjOut
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
             if (isDead == false)
             {
-                if (player.Position.X > 5900)
+                if (isLevel1 == true)
                 {
-                    velocity.X = 0;
-
-                    for (int i = 0; i < 4; i++)
+                    if (player.Position.X > 5900)
+                    //  if (Vector2.Distance(player.Position, position) > 500)
                     {
-                        if (player.Position.X - position.X > 170)
-                        {
-                            velocity.X += 1;
-                            flip = false;
-                        }
-                        else if (player.Position.X - position.X + 1 < -170)
-                        {
-                            velocity.X -= 1;
-                            flip = true;
-                        }
-                        else break;
+                        velocity.X = 0;
 
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (player.Position.X - position.X > 170)
+                            {
+                                velocity.X += 1;
+                                flip = false;
+                            }
+                            else if (player.Position.X - position.X + 1 < -170)
+                            {
+                                velocity.X -= 1;
+                                flip = true;
+                            }
+                            else break;
+
+                        }
                     }
                 }
 
+                if (isLevel1 == false)
+                {
+                    if (player.Position.X > 80)
+                    //  if (Vector2.Distance(player.Position, position) > 500)
+                    {
 
+                            velocity.X = 0;
+                        
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (player.Position.X - position.X > 170)
+                            {
+                                velocity.X += 1;
+                                flip = false;
+                            }
+                            else if (player.Position.X - position.X + 1 < -170)
+                            {
+                                velocity.X -= 1;
+                                flip = true;
+                            }
+                            else break;
+
+                        }
+                    }
+                }
                 if (Vector2.Distance(player.Position, position) < 150 && isAttacking == false)
                 {
                     currentTexture = AttackTexture;
-                    player.health -= 1;
+                    player.health -= 15;
                     isAttacking = true;
 
                 }
