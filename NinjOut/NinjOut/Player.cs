@@ -36,6 +36,7 @@ namespace NinjOut
         int row, colum;
         bool flip = false;
         public bool gameOver = false;
+        public bool youWin = false;
         public bool nextLevel = false;
         private bool hasJumped = false;
       //  public Song attackSound;
@@ -78,7 +79,7 @@ namespace NinjOut
             float columnsWidth = currentTexture.Width;
             row = (currentTexture.Height / 2) * 0;
 
-
+           // Console.WriteLine(position);
 
 
             //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
@@ -89,11 +90,11 @@ namespace NinjOut
             }
 
 
-            if (position.X > 8800 && nextLevel == false)
+            if (position.X > 10650 && nextLevel == false)
             {
                 nextLevel = true;
             }
-
+            
             position += velocity;
             //rectangle = new Rectangle((int)position.X, (int)position.Y, Texture.Width, Texture.Height);
 
@@ -104,6 +105,11 @@ namespace NinjOut
                 health = 0;
                 currentTexture = DeadTexture;
                 gameOver = true;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.L) /*&& hasJumped == false*/)
+            {
+                velocity.X = 0;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D) || (Keyboard.GetState().IsKeyDown(Keys.A)))
@@ -213,6 +219,7 @@ namespace NinjOut
 
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
+                velocity.X = 0f;
                 currentTexture = AttackTexture;
             }
 

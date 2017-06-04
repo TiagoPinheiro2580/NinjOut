@@ -31,3 +31,15 @@
 /processorParam:Quality=Best
 /build:ataque.mp3
 
+#begin Level2Music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Level2Music.mp3
+
+#begin MenuMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:MenuMusic.mp3
+

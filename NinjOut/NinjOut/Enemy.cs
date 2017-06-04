@@ -136,12 +136,15 @@ namespace NinjOut
                         }
                     }
                 }
-                if (Vector2.Distance(player.Position, position) < 200 && isAttacking == false)
+                if (Vector2.Distance(player.Position, position) < 220 && isAttacking == false)
                 {
-                    currentTexture = AttackTexture;
-                    player.health -= 15;
-                    isAttacking = true;
 
+                    currentTexture = AttackTexture;
+                    if (Vector2.Distance(player.Position, position) < 200)
+                    {
+                        player.health -= 15;
+                        isAttacking = true;
+                    }
                 }
 
 
@@ -185,6 +188,7 @@ namespace NinjOut
                 health = 0;
                 player.points += 30;
                 currentTexture = DeadTexture;
+                velocity.Y++;
                 isDead = true;
                 return;
                 
