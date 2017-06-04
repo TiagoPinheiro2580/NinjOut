@@ -40,7 +40,7 @@ namespace NinjOut
 
         Texture2D menuImage, gameOverImage;
 
-        Enemy[] enemyArray = new Enemy[20];
+        Enemy[] enemyArray = new Enemy[40];
         bool didGameStart = false;
         SpriteFont font;
         bool gameOver = false;
@@ -48,7 +48,7 @@ namespace NinjOut
         public int levelToLoad = 1;
         Enemy enemy;
         Rectangle rectangleImage;
-
+        int pointsNextLevel;
 
         public Game1()
         {
@@ -104,20 +104,20 @@ namespace NinjOut
 
                     enemyArray[i] = new Enemy(player);
 
-                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + i * 500;
+                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy + i * 200;
 
                     enemyArray[i].Load(Content);
                 }
             }
             if (levelToLoad == 2)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 40; i++)
                 {
 
 
                     enemyArray[i] = new Enemy(player);
 
-                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy2 + i * 500;
+                    enemyArray[i].xPosEnemy = enemyArray[i].xPosEnemy2 + i * 200;
 
                     enemyArray[i].Load(Content);
                 }
@@ -210,11 +210,13 @@ namespace NinjOut
                 {
                     didGameStart = false;
                     gameOver = true;
+                    levelToLoad = 1;
                     Restart();
 
                 }
                 if (player.nextLevel)
                 {
+                    pointsNextLevel = player.points;
                     levelToLoad = 2;
                     Restart();
                 }
@@ -374,12 +376,14 @@ namespace NinjOut
             if (levelToLoad == 2)
             {
                 
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 40; i++)
                 {
                   
                     enemyArray[i] = new Enemy(player);
                     enemyArray[i].Load(Content);
                 }
+
+                player.points = pointsNextLevel;
             }
             player.Load(Content);            
             LoadMap();

@@ -38,7 +38,7 @@ namespace NinjOut
         public bool gameOver = false;
         public bool nextLevel = false;
         private bool hasJumped = false;
-        public Song attackSound;
+      //  public Song attackSound;
 
 
         public Vector2 Position
@@ -64,7 +64,7 @@ namespace NinjOut
             GlideTexture = Content.Load<Texture2D>("GlideSpriteSheet");
             AttackTexture = Content.Load<Texture2D>("AttackSpriteSheet");
             DeadTexture = Content.Load<Texture2D>("DeadSpriteSheet");
-            attackSound = Content.Load<Song>("ataque");
+          //  attackSound = Content.Load<Song>("ataque");
             currentTexture = IdleTexture;
             oldTexture = currentTexture;
         }
@@ -156,7 +156,7 @@ namespace NinjOut
             if (currentTexture == AttackTexture)
             {
                 sourceRectangle = new Rectangle(colum, row, currentTexture.Width / 10, currentTexture.Height);
-                MediaPlayer.Play(attackSound);
+              //  MediaPlayer.Play(attackSound);
 
             }
 

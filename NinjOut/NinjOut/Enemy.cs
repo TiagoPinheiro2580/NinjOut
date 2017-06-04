@@ -95,12 +95,12 @@ namespace NinjOut
 
                         for (int i = 0; i < 4; i++)
                         {
-                            if (player.Position.X - position.X > 170)
+                            if (player.Position.X - position.X > 170 && player.Position.X - position.X < 2000)
                             {
                                 velocity.X += 1;
                                 flip = false;
                             }
-                            else if (player.Position.X - position.X + 1 < -170)
+                            else if (player.Position.X - position.X + 1 < -170 && player.Position.X - position.X + 1 > -2000)
                             {
                                 velocity.X -= 1;
                                 flip = true;
@@ -113,7 +113,7 @@ namespace NinjOut
 
                 if (isLevel1 == false)
                 {
-                    if (player.Position.X > 80)
+                    if (player.Position.X > 0)
                     //  if (Vector2.Distance(player.Position, position) > 500)
                     {
 
@@ -121,12 +121,12 @@ namespace NinjOut
                         
                         for (int i = 0; i < 4; i++)
                         {
-                            if (player.Position.X - position.X > 170)
+                            if (player.Position.X - position.X > 170 && player.Position.X - position.X < 2000)
                             {
                                 velocity.X += 1;
                                 flip = false;
                             }
-                            else if (player.Position.X - position.X + 1 < -170)
+                            else if (player.Position.X - position.X + 1 < -170 && player.Position.X - position.X + 1 > -2000)
                             {
                                 velocity.X -= 1;
                                 flip = true;
@@ -136,7 +136,7 @@ namespace NinjOut
                         }
                     }
                 }
-                if (Vector2.Distance(player.Position, position) < 150 && isAttacking == false)
+                if (Vector2.Distance(player.Position, position) < 200 && isAttacking == false)
                 {
                     currentTexture = AttackTexture;
                     player.health -= 15;
@@ -145,13 +145,13 @@ namespace NinjOut
                 }
 
 
-                if (Vector2.Distance(player.Position, position) > 150 && Vector2.Distance(player.Position, position) < 1000)
+                if (Vector2.Distance(player.Position, position) > 200 && Vector2.Distance(player.Position, position) < 2000)
                 {
                     currentTexture = WalkTexture;
                     isAttacking = false;
                 }
 
-                if (Vector2.Distance(player.Position, position) > 1000)
+                if (Vector2.Distance(player.Position, position) > 2000)
                 {
                     currentTexture = IdleTexture;
                 }
