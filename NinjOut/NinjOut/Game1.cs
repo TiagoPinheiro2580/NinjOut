@@ -510,7 +510,7 @@ namespace NinjOut
                 else if (youWin)
                 {
                     spriteBatch.Draw(youWinImage, rectangleImage2, Color.White);
-                     spriteBatch.DrawString(font, "Your Combined Points:  " + finalPoints,new Vector2(500,500), Color.Gray);
+                     spriteBatch.DrawString(font, "Your Score:  " + finalPoints,new Vector2(500,500), Color.Gray);
                 }
                 else
                 {
@@ -574,8 +574,8 @@ namespace NinjOut
 
                 //player.Draw(spriteBatch, new Vector2(400, 200));
                 player.Draw(spriteBatch);
-                spriteBatch.DrawString(font, "Health: " + player.health, player.Position + new Vector2(300, -500), Color.Red);
-                spriteBatch.DrawString(font, " " + player.points, player.Position - new Vector2(900, 500), Color.Red);
+                spriteBatch.DrawString(font, "Health: " + player.health, new Vector2(camera.center.X+250, camera.center.Y-500), Color.Red);
+                spriteBatch.DrawString(font, " " + player.points, new Vector2(camera.center.X - 900, camera.center.Y - 500), Color.Red);
 
                 
 

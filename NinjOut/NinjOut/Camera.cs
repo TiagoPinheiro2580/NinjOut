@@ -17,7 +17,7 @@ namespace NinjOut
             get { return transform; }
         }
 
-        private Vector2 center;
+        public Vector2 center;
         public static Viewport viewport;
 
         public Camera(Viewport newViewport)
