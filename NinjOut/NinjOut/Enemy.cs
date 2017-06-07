@@ -62,12 +62,12 @@ namespace NinjOut
         public void Load(ContentManager Content)
         {
             //position = new Vector2(6700, 15);
-            position = new Vector2(xPosEnemy, 15);
-            WalkTexture = Content.Load<Texture2D>("WalkSpritSheetEnemy");
+            position = new Vector2(xPosEnemy, 1000);
+            WalkTexture = Content.Load<Texture2D>("WalkSpritSheetEnemyNew");
             ShootTexture = Content.Load<Texture2D>("ShootSpriteSheetEnemy");
             IdleTexture = Content.Load<Texture2D>("IdleSpriteSheetEnemy");
-            AttackTexture = Content.Load<Texture2D>("MeeleAttackSpriteSheetEnemy");
-            DeadTexture = Content.Load<Texture2D>("DeadSpriteSheetEnemy");
+            AttackTexture = Content.Load<Texture2D>("MeeleAttackSpriteSheetEnemyNew");
+            DeadTexture = Content.Load<Texture2D>("DeadSpriteSheetEnemyNew");
             currentTexture = IdleTexture;
             oldTexture = currentTexture;
         }

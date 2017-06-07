@@ -232,7 +232,7 @@ namespace NinjOut
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            Console.WriteLine(rectangleImage.X);
+           // Console.WriteLine(rectangleImage.X);
 
             pointsNextLevel = player.points;
             healthNextLevel = player.health;
@@ -358,7 +358,7 @@ namespace NinjOut
                 {
                     finalPoints = (player.points * player.health / (time / 3));
                 }
-                Console.WriteLine(time);
+              //  Console.WriteLine(time);
                 scrolling1.Update();
                 scrolling2.Update();
             }

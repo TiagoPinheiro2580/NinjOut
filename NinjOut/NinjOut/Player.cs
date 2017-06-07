@@ -39,6 +39,7 @@ namespace NinjOut
         public bool youWin = false;
         public bool nextLevel = false;
         private bool hasJumped = false;
+        public bool onParachute = true;
       //  public Song attackSound;
 
 
@@ -62,11 +63,11 @@ namespace NinjOut
             WalkTexture = Content.Load<Texture2D>("WalkSpriteSheet");
             JumpTexture = Content.Load<Texture2D>("JumpSpriteSheet");
             IdleTexture = Content.Load<Texture2D>("IdleSpriteSheet");
-            GlideTexture = Content.Load<Texture2D>("GlideSpriteSheet");
+            GlideTexture = Content.Load<Texture2D>("GlideSpriteSheetNew");
             AttackTexture = Content.Load<Texture2D>("AttackSpriteSheet");
             DeadTexture = Content.Load<Texture2D>("DeadSpriteSheet");
           //  attackSound = Content.Load<Song>("ataque");
-            currentTexture = IdleTexture;
+            currentTexture = GlideTexture;
             oldTexture = currentTexture;
         }
 
@@ -79,8 +80,13 @@ namespace NinjOut
             float columnsWidth = currentTexture.Width;
             row = (currentTexture.Height / 2) * 0;
 
-           // Console.WriteLine(position);
+           Console.WriteLine(position);
 
+            if(onParachute)
+            {
+               
+                velocity.Y = 4f;
+            }
 
             //Rectangle sourceRectangle = new Rectangle(width * colum, height * row, width, height);
             //Rectangle destiantionRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
@@ -89,7 +95,7 @@ namespace NinjOut
                 gameOver = true;
             }
 
-
+            
             if (position.X > 10650 && nextLevel == false)
             {
                 nextLevel = true;
@@ -107,52 +113,58 @@ namespace NinjOut
                 gameOver = true;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.L) /*&& hasJumped == false*/)
+            if (!onParachute)
             {
-                velocity.X = 0;
-            }
+                if (Keyboard.GetState().IsKeyDown(Keys.L) /*&& hasJumped == false*/)
+                {
+                    velocity.X = 0;
+                }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.D) || (Keyboard.GetState().IsKeyDown(Keys.A)))
-                currentTexture = WalkTexture;
+                if (Keyboard.GetState().IsKeyDown(Keys.D) || (Keyboard.GetState().IsKeyDown(Keys.A)))
+                    currentTexture = WalkTexture;
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space) /*&& hasJumped == false*/)
-            {
-                currentTexture = JumpTexture;
-            }
+                else if (Keyboard.GetState().IsKeyDown(Keys.Space) /*&& hasJumped == false*/)
+                {
+                    currentTexture = JumpTexture;
+                }
 
-            else
-            {
-                currentTexture = IdleTexture;
-            }
+                else
+                {
+                    currentTexture = IdleTexture;
+                }
 
-            if (currentTexture != oldTexture)
-            {
-                oldTexture = currentTexture;
-                currentFrame = 0;
-                frames = 0;
-            }
-
-          
-            Input(gameTime);
-
-            frames++;
-
-            if (frames > 5)
-            {
-                currentFrame++;
-                if (currentFrame > 9)
+                if (currentTexture != oldTexture)
+                {
+                    oldTexture = currentTexture;
                     currentFrame = 0;
+                    frames = 0;
+                }
 
-                frames = 0;
-                colum = (int)((columnsWidth / 10) * currentFrame);
+
+                
+
+                frames++;
+
+                if (frames > 5)
+                {
+                    currentFrame++;
+                    if (currentFrame > 9)
+                        currentFrame = 0;
+
+                    frames = 0;
+                    colum = (int)((columnsWidth / 10) * currentFrame);
+
+                }
+
+                if (currentFrame == totalFrames)
+                {
+
+                    currentFrame = 0;
+                }
 
             }
 
-            if (currentFrame == totalFrames)
-            {
-
-                currentFrame = 0;
-            }
+            Input(gameTime);
 
             if (currentTexture == WalkTexture)
             {
@@ -223,7 +235,8 @@ namespace NinjOut
                 currentTexture = AttackTexture;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false)
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false && onParachute == false)
             {
                 position.Y -= 15f;
                 velocity.Y = -11f;
@@ -242,6 +255,7 @@ namespace NinjOut
                 rectangle.Y = newRectangle.Y - rectangle.Height;
                 velocity.Y = 0f;
                 hasJumped = false;
+                onParachute = false;
             }
             if (rectangle.TouchLeftOf(newRectangle))
             {
@@ -262,7 +276,9 @@ namespace NinjOut
             }
             if (idleRectangle.TouchBottomOf(newRectangle))
             {
+               
                 velocity.Y = 1f;
+
             }
 
             //position.X = rectangle.X;
